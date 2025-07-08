@@ -11,6 +11,8 @@ import { pdf } from "@react-pdf/renderer";
 import { svgToDataUri } from "@/lib/svgToDataUri";
 import { useEffect, useState } from "react";
 import { currencyList } from "@/lib/currency";
+import EmailInvoiceButton from './EmailInvoiceButton';
+
 export const DownloadInvoiceButton = () => {
   const [status, setStatus] = useState<
     "downloaded" | "downloading" | "not-downloaded"
@@ -106,6 +108,7 @@ export const DownloadInvoiceButton = () => {
             </>
           )}
         </Button>
+            <EmailInvoiceButton />
       </div>
     </div>
   );

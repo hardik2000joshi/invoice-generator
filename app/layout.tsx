@@ -3,6 +3,31 @@ import "./globals.css";
 import { GeistSans } from "geist/font/sans";
 import Script from "next/script";
 
+function getValidURL(raw: string | undefined, fallback: string) {
+  if (!raw || raw.toLowerCase() === "null" || raw.toLowerCase() === "undefined") {
+    return fallback;
+  }
+  try {
+    // Try to construct a URL to validate
+    new URL(raw);
+    return raw;
+  } catch {
+    console.warn("Invalid NEXT_PUBLIC_URL, using fallback");
+    return fallback;
+  }
+}
+
+// Always returns a valid URL object
+function getSafeURLObject(raw: string | undefined, fallback: string) {
+  try {
+    return new URL(getValidURL(raw, fallback));
+  } catch {
+    return new URL(fallback);
+  }
+}
+
+const baseUrl = getValidURL(process.env.NEXT_PUBLIC_URL, "http://localhost:3000");
+
 export const viewport: Viewport = {
   themeColor: "#f97316",
   width: "device-width",
@@ -10,7 +35,7 @@ export const viewport: Viewport = {
 };
 
 export const metadata: Metadata = {
-  metadataBase: new URL(process.env.NEXT_PUBLIC_URL!),
+  metadataBase: getSafeURLObject(process.env.NEXT_PUBLIC_URL, "http://localhost:3000"),
   alternates: {
     canonical: "/",
     languages: {
@@ -34,7 +59,7 @@ export const metadata: Metadata = {
       "Free Invoice Generator: Create & Send Professional Invoices in Minutes",
     description:
       "Get paid on time with our free invoice maker. Create professional invoices & get them to clients instantly.",
-    url: process.env.NEXT_PUBLIC_URL,
+    url: baseUrl,
     type: "website",
     images: "/og-image.jpeg",
     siteName: "Invoice Generator",

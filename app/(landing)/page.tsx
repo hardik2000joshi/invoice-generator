@@ -1,3 +1,5 @@
+
+
 /* eslint-disable @next/next/no-img-element */
 "use client";
 
@@ -20,9 +22,39 @@ import Image from "next/image";
 import Link from "next/link";
 import DemoPreview from "./components/demoPreview";
 
-const Home = () => {
+const Home = () => {  
   return (
     <div className="bg-[#f7f7f7] flex justify-center items-center overflow-x-hidden">
+      <div className="absolute top-4 right-4 flex gap-4">
+        <Link 
+        href="/settings" 
+        className=" whitespace-nowrap hover:no-underline font-medium group rounded-[8px] text-sm text-[#333] hover:bg-[#5E5E5E] transition-duration-150 ease-in-out flex items-center p-[10px] w-full relative" 
+        aria-label="Navigate To Settings"
+        >
+        Settings
+        </Link>
+        <Link 
+        href="/login" 
+        className="whitespace-nowrap hover:no-underline font-medium group rounded-[8px] text-sm text-[#333] hover:bg-[#5E5E5E] transition duration-150 ease-in-out flex items-center p-[10px] relative"
+        aria-label="Navigate To Login"
+      >
+        Login
+      </Link>
+        <Link 
+        href="/signup" 
+        className="whitespace-nowrap hover:no-underline font-medium group rounded-[8px] text-sm text-[#333] hover:bg-[#5E5E5E] transition duration-150 ease-in-out flex items-center p-[10px] relative"
+        aria-label="Navigate To Sign Up"
+      >
+        Sign Up
+      </Link>
+        <Link 
+        href="/upgrade" 
+        className="whitespace-nowrap hover:no-underline font-medium group rounded-[8px] text-sm text-[#333] hover:bg-[#5E5E5E] transition duration-150 ease-in-out flex items-center p-[10px] relative"
+        aria-label="Navigate To Upgrade"
+      >
+        Upgrade Now
+      </Link>
+      </div>
       <div className="border-l border-r max-w-4xl w-full mx-auto border-dashed h-full flex justify-center flex-col border-gray-300">
         <a
           href="https://www.producthunt.com/posts/invoice-generator-9bce3e1b-dab2-4a7a-ba7e-e315be868119"
@@ -67,7 +99,15 @@ const Home = () => {
             >
               Generate Invoice
             </Link>
-            <a
+
+            <Link
+            href="/schedule-payment" 
+            className="inline-flex items-center justify-center whitespace-nowrap rounded-lg transition-colors focus-visible:outline-none focus-visible:ring-ring font-medium disabled:pointer-events-none disabled:opacity-50 bg-gradient-to-br from-green-500 to-blue-400 text-white hover:bg-black/90 px-6 py-2 text-lg" 
+            >
+              Subscribe API
+            </Link>
+            
+            {/*<a
               target="_blank"
               href="https://github.com/pranavp10/invoice-generator"
               className="inline-flex items-center justify-center whitespace-nowrap rounded-lg font-medium transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50 border bg-transparent hover:bg-neutral-100 hover:text-accent-foreground px-6 py-1.5 text-lg gap-2 border-dashed border-gray-400"
@@ -88,6 +128,7 @@ const Home = () => {
               </svg>
               Github
             </a>
+            */}
           </div>
           <div className=" group border-b  border-dashed text-balance text-center w-full font-semibold border-gray-300 ">
             <div className="grid grid-cols-2 px-4 relative py-6 text-3xl md:text-7xl max-w-lg mx-auto">

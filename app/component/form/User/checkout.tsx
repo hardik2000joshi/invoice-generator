@@ -26,6 +26,39 @@ const CheckoutPage = () => {
   // Toggle discount code visibility
   const handleToggleDiscountCode = () => setShowDiscountCode((show) => !show);
 
+  const handleApplyDiscount = async () => {
+    if (!discountCode.trim()){
+      alert("please enter a discount code.");
+      return;
+    }
+ 
+
+  try {
+    const response = await fetch("/api/validate-discount", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({code: discountCode.trim()}),
+    });
+
+    if (!response.ok) {
+      throw new Error("Invalid Discount Code.");
+    }
+    const result = await response.json();
+    if (result.success) {
+      alert (`Discount code applied! You get ${result.discount}% off.`);
+    }
+    else {
+      alert ("Invalid or expired discount code.");
+    }
+  }
+  catch (error) {
+    console.error("Error validating discount code:", error);
+    alert("Something went wrong while validating the discount code.");
+  }
+};
+
   // Handle payment method change
   const handlePaymentMethodChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setPaymentMethod(e.target.value as "credit-card" | "paypal");
@@ -203,7 +236,7 @@ const CheckoutPage = () => {
                     id="other_discount_code_button"
                     value="Apply"
                     className="pmpro_btn pmpro_btn-submit-discount-code bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded cursor-pointer"
-                    onClick={() => alert("Discount code applied!")}
+                    onClick= {handleApplyDiscount}
                   />
                 </div>
               </div>

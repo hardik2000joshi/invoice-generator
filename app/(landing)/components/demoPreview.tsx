@@ -14,16 +14,16 @@ const DemoPreview = () => (
 
 const defaultValue = {
   companyDetails: {
-    companyName: "Prolab Inc",
+    /*companyName: "Prolab Inc",*/
     companyAddress: "1600 Amphitheatre Parkway",
     companyCity: "Mountain View",
     companyState: "CA",
     companyCountry: "USA",
-    companyLogo: "/android-chrome-192x192.png",
+    /*companyLogo: "/android-chrome-192x192.png",*/
     companyTaxId: "",
     companyZip: "94043",
     email: "support@prolab.sh",
-  },
+  },  
   yourDetails: {
     yourName: "Pranav Patel",
     yourAddress: "6th Main Rd, Eshwara Layout, Indiranagar,",

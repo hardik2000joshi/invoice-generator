@@ -17,11 +17,6 @@ const SchedulePayment = () => {
                         <h1 className='ml-2 text-2xl font-bold text-gray-900'> API Subscription </h1>
 
         </div>
-        <nav className='flex space-x-8'> 
-            <a className='text-gray-500 hover:text-gray-900 font-medium' href="#">Documentation</a>
-            <a className='text-gray-500 hover:text-gray-900 font-medium' href="#">Support</a>
-            <a className='text-gray-500 hover:text-gray-900 font-medium' href="#">Login</a>
-        </nav>
         </div>
         </div>
         </header>

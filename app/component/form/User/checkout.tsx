@@ -16,9 +16,6 @@ const CheckoutPage = () => {
   const [showDiscountCode, setShowDiscountCode] = useState(false);
   const [paymentMethod, setPaymentMethod] = useState<"credit-card" | "paypal">("credit-card");
   const [termsAccepted, setTermsAccepted] = useState(false);
-  const [recaptchaChecked, setRecaptchaChecked] = useState(false);
-  const [recaptchaError, setRecaptchaError] = useState(false);
-
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [success, setSuccess] = useState<string | null>(null);
@@ -75,15 +72,7 @@ const CheckoutPage = () => {
       setLoading(false);
       return;
     }
-    if (!recaptchaChecked) {
-      setRecaptchaError(true);
-      setError("Please verify that you are not a robot.");
-      setLoading(false);
-      return;
-    }
 
-    setRecaptchaError(false);
-    setError('');
     /*setSuccess('Form Submitted Successfully');
     setLoading(true);*/
 
@@ -467,30 +456,8 @@ const CheckoutPage = () => {
             </span>
           </div>
 
-          {/* reCAPTCHA */}
-          <div className="max-w-lg mx-auto mt-4 p-4 border border-gray-300 rounded-md">
-            <div className="flex items-center gap-2">
-              <input
-                type="checkbox"
-                id="recaptcha"
-                checked={recaptchaChecked}
-                onChange={(e) => setRecaptchaChecked(e.target.checked)}
-                required
-              />
-              <span className="text-sm">I'm not a robot</span>
-              <img
-                src="https://www.gstatic.com/recaptcha/api2/logo_48.png"
-                alt="reCAPTCHA"
-                className="ml-2"
-              />
-            </div>
-            <div className="text-sm text-gray-600">reCAPTCHA</div>
-            {!recaptchaChecked && recaptchaError && (
-              <p className="text-red text-600 mt-2">Please confirm you're not a robot.</p>
-            )}
-          </div>
-
           {/* Privacy Policy */}
+          <div>
           <div className="max-w-lg mx-auto mt-4 flex">
             <p className="text-sm whitespace-pre-line">
               Your personal data will be used to process your order, support
@@ -499,8 +466,8 @@ const CheckoutPage = () => {
               <a href="#" className="text-blue-500 hover:underline">
                 privacy policy
               </a>
-              .
             </p>
+          </div>
           </div>
 
           {/* Submit button */}

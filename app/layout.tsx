@@ -166,7 +166,7 @@ export default function RootLayout({
           Privacy Policy 
           </Link>
 
-          <Link href='/contact'
+          <Link href='/contactUs'
           className="hover: underline transition duration-150 ease-in-out"
           >
             Contact Us

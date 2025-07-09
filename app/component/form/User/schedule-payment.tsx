@@ -1,9 +1,73 @@
 'use client';
+import { setFips } from 'crypto';
 import Link from 'next/link';
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 
 const SchedulePayment = () => {
     const [requests, setRequests] = useState(5000);
+    const [baseCost, setBaseCost] = useState(0);
+    const [discount, setDiscount] = useState(0);
+    const [finalAmount, setFinalAmount] = useState(0);
+
+    useEffect(() => {
+        let cost = 0;
+        let discountAmount = 0;
+        let finalAmount = cost - discountAmount;
+        if (requests <= 5000) {
+            cost = 50;
+            discountAmount = cost * 0.10; // 10%= 10/100 = 0.10 
+            // disAmt = 50 * .10 = 5%
+        }
+
+        else if (requests <= 10000) {
+            cost = 100;
+            discountAmount = 10;
+        }
+
+        else if (requests <= 15000){
+            cost = 150;
+            discountAmount = 15;
+        }
+        
+        else if (requests <= 20000) { 
+            cost = 200;
+            discountAmount = 20;
+        }
+
+        else if (requests <= 25000) {
+            cost = 250;
+            discountAmount = 25;
+        }
+
+        else if (requests <= 30000) {
+            cost = 300;
+            discountAmount = 30;
+        }
+
+        else if (requests <= 35000) {
+            cost = 350;
+            discountAmount = 35;
+        }
+
+        else if (requests <= 40000) {
+            cost = 400;
+            discountAmount = 40;
+        }
+
+        else if (requests <= 45000) {
+            cost = 450;
+            discountAmount = 45;
+        }
+
+        else if (requests <= 50000) {
+            cost = 500;
+            discountAmount = 50;
+        }
+
+        setDiscount(discountAmount);
+        setFinalAmount(cost-discountAmount);
+        setBaseCost(cost);
+    }, [requests]);
 
     return (
         <div className='min-h-screen'>
@@ -41,7 +105,7 @@ const SchedulePayment = () => {
                         <label className='block-text-sm font-medium text-gray-700 mb-1' htmlFor="requests">
                             Monthly API Requests
                         </label>
-                        <input id="requests" className='calculator-slider w-full h-2 bg-blue-200 rounded-lg appearance-none cursor-pointer' type="range" min="1000" max="50000" step="1000" value={requests} 
+                        <input id="requests" className='calculator-slider w-full h-2 bg-blue-700 rounded-lg appearance-none cursor-pointer' type="range" min="1000" max="50000" step="1000" value={requests} 
                         onChange={(e) => setRequests(Number(e.target.value))}
                         />
                         <div className='flex justify-between mt-2 text-sm text-gray-600'>
@@ -52,11 +116,11 @@ const SchedulePayment = () => {
                         <div className="mt-6 p-4 bg-white rounded-lg shadow-sm">
                             <div className="flex justify-between items-center">
                                 <div>
-                                    <p className="text-lg font-medium text-gray-900" id="requestDisplay">5,000 requests</p>
+                                    <p className="text-lg font-medium text-gray-900">{requests.toLocaleString()}requests</p>
                                     <p className="text-sm text-gray-500">per month</p>
                                 </div>
                                 <div className="text-right">
-                                    <p className="text-2xl font-bold text-blue-600" id="costDisplay">$45.00</p>
+                                    <p className="text-2xl font-bold text-blue-600">${finalAmount.toFixed(2)}</p>
                                     <p className="text-sm text-gray-500">estimated cost</p>
                                 </div>
                             </div>
@@ -64,11 +128,11 @@ const SchedulePayment = () => {
                             <div className="mt-4 pt-4 border-t border-gray-200">
                                 <div className="flex justify-between text-sm">
                                     <span className="text-gray-600">Base cost (5,000 requests @ $10/1,000)</span>
-                                    <span className="font-medium" id="baseCost">$50.00</span>
+                                    <span className="font-medium">${baseCost.toFixed(2)}</span>
                                 </div>
                                 <div className="flex justify-between text-sm mt-2">
-                                    <span className="text-gray-600">Volume bonus (10% on 5,000 requests)</span>
-                                    <span className="font-medium text-green-600" id="bonusAmount">-$5.00</span>
+                                    <span className="text-gray-600">Discount</span>
+                                    <span className="font-medium text-green-600">${discount.toFixed(2)}</span>
                                 </div>
                             </div>
                             <div className='mt-6 flex justify-center'>

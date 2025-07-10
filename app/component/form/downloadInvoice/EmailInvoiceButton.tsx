@@ -62,7 +62,7 @@ const EmailInvoiceButton = () => {
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M5 13l4 4L19 7" />
                 </svg>
                 <h3 className="text-xl font-bold text-gray-800 mb-2">Invoice Sent!</h3>
-                <p className="text-gray-600 mb-4">We've sent the invoice to your email address.</p>
+                <p className="text-gray-600 mb-4">We&#39;ve sent the invoice to your email address.</p>
                 <button onClick={handleClosePopup} className="px-6 py-2 bg-indigo-600 text-white font-medium rounded-lg shadow hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-opacity-50 transition-all">
                   Close
                 </button>

@@ -13,12 +13,21 @@ const LoginPage = () => {
     console.log('Password:', password);
   };
 
+  const handleCancel = () => {
+
+    console.log('Cancel button clicked');
+  }
+
+  const handleSignUp = () => {
+    console.log('Sign-up button clicked');
+  }
+
 
     return (
         <div className="flex justify-center items-center h-screen">
             <div className= "bg-white p-8 rounded-lg shadow-md w-96">
                 <h2 className="text-2xl font-bold mb-4">Log in to your account</h2>
-                <p className="text-gray-600 mb-6">Welcome back, we hope you're <br /> having a great day.</p>
+                <p className="text-gray-600 mb-6">Welcome back, we hope you&#39;re <br /> having a great day.</p>
                 <form>
                     <div className="mb-4">
                         <label className="block-text-gray-700 text-sm font-bold mb-2" htmlFor="email">
@@ -66,7 +75,7 @@ const LoginPage = () => {
                             </div>
                             
                             <div className="flex items-center justify-center">
-    <span className="text-sm text-gray-600 mr-2">Don't have an account?</span>
+    <span className="text-sm text-gray-600 mr-2">Don&#39;t have an account?</span>
     <button className="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline" type="button" onClick={() => handleSignUp()}>
         Sign Up
         </button>

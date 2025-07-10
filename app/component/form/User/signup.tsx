@@ -19,12 +19,16 @@ const SignupPage = () => {
   console.log('Cancel button clicked');
 };
 
+const handleLogin = () => {
+  console.log('Login button clicked');
+}
+
 
     return (
         <div className="flex justify-center items-center h-screen">
             <div className="bg-white p-8 rounded-lg shadow-md w-96">
                 <h2 className="text-2xl font-bold mb-4">Sign Up</h2>
-                <p className="text-gray-600 mb-6">You're a few seconds away from <br /> your Invoice Simple account!</p>
+                <p className="text-gray-600 mb-6">You&#39;re a few seconds away from <br /> your Invoice Simple account!</p>
                 <form>
                            <div className="mb-4">
             <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="firstName">First Name</label>

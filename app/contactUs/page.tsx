@@ -7,7 +7,7 @@ export default function ContactUsPage() {
          if (!document.getElementById('ze-snippet')) {
         const script = document.createElement('script');
         script.id = "ze-snippet";
-        script.src = "https://static.zdassets.com/ekr/snippet.js?key=162ab1a3-486f-4ab2-9b79-bb39916c05f3";
+        script.src = 'https://static.zdassets.com/ekr/snippet.js?key=162ab1a3-486f-4ab2-9b79-bb39916c05f3';
         script.async = true;
 
         document.body.appendChild(script);

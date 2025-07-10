@@ -106,8 +106,8 @@ export async function POST(request: Request) {
         paymentMethod: paymentMethod || '',
       },
 
-      success_redirect: 'http://localhost:3000/payment-success',
-      failure_redirect: 'http://localhost:3000/payment-failure',
+      success_redirect: finalSuccessRedirect,
+      failure_redirect: finalFailureRedirect,
       success_callback: 'http://localhost:3000/paysecure/success-callback',
       failure_callback: 'http://localhost:3000/paysecure/failure-callback',
     };

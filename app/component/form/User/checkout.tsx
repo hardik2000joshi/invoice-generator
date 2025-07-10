@@ -150,21 +150,28 @@ const CheckoutPage = () => {
   };
 
   return (
-    <div>
+    <div className="max-w-3xl mx-auto p-6 bg-gray-100">
       {/* Top nav */}
       <div className="flex justify-between items-center pt-8">
-        <ul className="flex gap-10 list-none p-0 m-0 ml-40">
-          {["Learn", "Community", "Resources", "Tools"].map((item) => (
-            <li key={item}>
-              <a href="#" className="text-lg text-blue-600 hover:underline">
-                {item}
-              </a>
+        <ul className="flex gap-16 list-none p-0 m-0 ml-40">
+          <li>
+              <a href="/learn" className="text-lg text-blue-600 hover:underline">Learn</a>
+              </li>
+
+              <li>
+              <a href="/community" className="text-lg text-blue-600 hover:underline">Community</a>
+              </li>
+
+              <li>
+              <a href="/resources" className="text-lg text-blue-600 hover:underline">Resources</a>
+              </li>
+
+              <li>
+              <a href="/tools" className="text-lg text-blue-600 hover:underline">Tools</a>
             </li>
-          ))}
+
         </ul>
-        <a href="#" className="text-lg text-blue-600 mr-8 hover:underline">
-          Sign In
-        </a>
+
       </div>
 
       {/* Membership info card */}

@@ -1,6 +1,5 @@
 'use client';
 
-import { setDefaultAutoSelectFamily } from 'net';
 import {useState, useEffect} from 'react';
 
 export default function MyAccountPage() {
@@ -16,12 +15,8 @@ export default function MyAccountPage() {
         fetchUser();
     }, []);
 
-    if (!user) {
-        return
-        <div className='flex justify-center items-center h-screen'>
-            Loading...
-        </div>
-    }
+    if (!user)  return <div className='flex justify-center items-center h-screen'> Loading... </div>;
+        
 
     return (
         <div className='min-h-screen bg-gray-100 flex'>
@@ -61,7 +56,7 @@ export default function MyAccountPage() {
                             Welcome, {user.name} 
                         </h1>
                         <p className="text-gray-600">
-                            Here's an overview of your account activity.</p>
+                            Here&#39;s an overview of your account activity.</p>
                          </section>
                 )}
 

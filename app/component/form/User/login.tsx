@@ -63,12 +63,13 @@ const LoginPage = () => {
                             Forgot your password?
                             </a>
                             <div className="flex justify-center mb-4 space-x-4">
-                            <button className="bg-orange-500 hover:bg-orange-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
+                            <a href="/myAccount"
+                            className="bg-orange-500 hover:bg-orange-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
                         type="button"
                             onClick={() => handleLogin()}
                             >
                             Login
-                        </button>
+                        </a>
                         <button className="bg-gray-500 hover:bg-gray-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline mr-4" type="button" onClick={() => handleCancel()}>
                             Cancel
                             </button>
@@ -76,9 +77,14 @@ const LoginPage = () => {
                             
                             <div className="flex items-center justify-center">
     <span className="text-sm text-gray-600 mr-2">Don&#39;t have an account?</span>
-    <button className="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline" type="button" onClick={() => handleSignUp()}>
-        Sign Up
-        </button>
+
+<a href="/signup"
+className='inline-block bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline'
+>
+    Sign Up
+</a>
+        
+        
         </div>
         </div>
                 </form>

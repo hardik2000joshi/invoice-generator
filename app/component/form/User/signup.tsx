@@ -117,9 +117,13 @@ const handleLogin = () => {
 
                 <p className="text-sm text-gray-600 mt-2">
   Already have an account?{' '}
-  <button className="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline" type="button" onClick={() => handleLogin()}>
+
+  <a href="/login"
+  className='inline-block bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded focus:shadow-outline'
+  >
     Log in
-  </button>
+  </a>
+    
 </p>
             </div>
         </div>

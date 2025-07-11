@@ -403,7 +403,7 @@ const CheckoutPage = () => {
 
           <p className="text-sm mb-4">
             Already have an account?{" "}
-            <a href="#" className="text-blue-600 hover:underline">
+            <a href="/login" className="text-blue-600 hover:underline">
               Log in here
             </a>
           </p>

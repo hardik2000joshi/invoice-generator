@@ -6,13 +6,27 @@ const SignupPage = () => {
     const [lastName, setLastName] = useState('');
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
+    const [successMessage, setSuccessMessage] = useState('');
 
     const handleSignUp = () => {
+      if (firstName && lastName && email && password) {
         console.log('Sign-up button clicked');
         console.log('First Name:', firstName);
         console.log('Last Name:', lastName);
         console.log('Email:', email);
         console.log('Password:', password);
+
+        setSuccessMessage('Account created Successfully!');
+      
+
+      setFirstName('');
+      setLastName('');
+      setEmail('');
+      setPassword('');
+      } else {
+        setSuccessMessage('Please fill in all the fields');
+      }
+        
     };
 
     const handleCancel = () => {
@@ -29,6 +43,13 @@ const handleLogin = () => {
             <div className="bg-white p-8 rounded-lg shadow-md w-96">
                 <h2 className="text-2xl font-bold mb-4">Sign Up</h2>
                 <p className="text-gray-600 mb-6">You&#39;re a few seconds away from <br /> your Invoice Simple account!</p>
+
+                {successMessage && (
+                  <div className='mb-4 text-center text-green-600 font-semibold'>
+                    {successMessage}
+                  </div>
+                )}
+
                 <form>
                            <div className="mb-4">
             <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="firstName">First Name</label>
@@ -97,7 +118,7 @@ const handleLogin = () => {
     type="button"
     onClick={() => handleSignUp()}
   >
-    Sign Up
+   Create Account
   </button>
 
   <button

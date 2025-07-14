@@ -6,14 +6,22 @@ export default function MyAccountPage() {
     const [user, setUser] = useState<any>(null);
     const [activeTab, setActiveTab] = useState('dashboard');
 
+    const fetchUser = async () => {
+        const response = await fetch ('api/account');
+        const data = await response.json();
+        setUser(data);
+    }
+
     useEffect(() => {
-        const fetchUser = async () => {
-            const response = await fetch ('/api/account');
-            const data = await response.json();
-            setUser(data);
-        };
         fetchUser();
     }, []);
+
+    const handleGenerateKey = async () => {
+        const response = await fetch('api/generate_api_key', {method:'POST'});
+             if (response.ok) {
+            await fetchUser();
+        }
+    };
 
     if (!user)  return <div className='flex justify-center items-center h-screen'> Loading... </div>;
         
@@ -123,7 +131,8 @@ export default function MyAccountPage() {
                                 <h2 className='text-2xl font-semibold text-gray-800'>
                                     API Keys
                                 </h2>
-                                <button className='bg-blue-600 text-white px-4 py-1 rounded hover:bg-blue-700 text-sm'>
+                                <button onClick={handleGenerateKey}
+                                className='bg-blue-600 text-white px-4 py-1 rounded hover:bg-blue-700 text-sm'>
                                     Generate Key
                                 </button>
                             </div>
@@ -136,7 +145,7 @@ export default function MyAccountPage() {
                                             <div key= {i}
                                             className='bg-gray-100 p-3 rounded font-mono text-sm overflow-auto'
                                             >
-                                                {user.apiKeys[i]}
+                                                {user.apiKeys[i].key}
                                                 </div>
                                         );
                                     }

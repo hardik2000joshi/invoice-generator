@@ -8,27 +8,36 @@ const SignupPage = () => {
     const [password, setPassword] = useState('');
     const [successMessage, setSuccessMessage] = useState('');
 
-    const handleSignUp = () => {
+    const handleSignUp = async () => {
       if (firstName && lastName && email && password) {
-        console.log('Sign-up button clicked');
-        console.log('First Name:', firstName);
-        console.log('Last Name:', lastName);
-        console.log('Email:', email);
-        console.log('Password:', password);
+        try {
+          const response = await fetch ("/api/signup", {
+            method: "POST",
+            headers: {"Content-Type": "application/json"},
+            body: JSON.stringify({firstName, lastName, email, password }),
+          });
 
-        setSuccessMessage('Account created Successfully!');
-      
-
-      setFirstName('');
-      setLastName('');
-      setEmail('');
-      setPassword('');
-      } else {
-        setSuccessMessage('Please fill in all the fields');
+          if (response.ok) {
+            setSuccessMessage("Account Created Successfully!");
+            setFirstName('');
+            setLastName('');
+            setEmail('');
+            setPassword('');
+          }
+          else {
+        setSuccessMessage('Failed to create Account');
       }
-        
+        }
+        catch (error) {
+      console.error("Signup error:", error);
+      setSuccessMessage("Something went wrong.");
+        }
+      }
+      else {
+        setSuccessMessage("Please fill in all the fields");
+      }
     };
-
+    
     const handleCancel = () => {
   console.log('Cancel button clicked');
 };

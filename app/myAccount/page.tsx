@@ -7,9 +7,18 @@ export default function MyAccountPage() {
     const [activeTab, setActiveTab] = useState('dashboard');
 
     const fetchUser = async () => {
-        const response = await fetch ('api/account');
-        const data = await response.json();
-        setUser(data);
+        const response = await fetch ('/api/account', {
+            method: 'GET',
+            credentials: 'include',
+        });
+
+        if (response.ok) {
+            const data = await response.json();
+            setUser(data)
+        }
+        else {
+            setUser(null);
+        }
     }
 
     useEffect(() => {
@@ -17,8 +26,15 @@ export default function MyAccountPage() {
     }, []);
 
     const handleGenerateKey = async () => {
-        const response = await fetch('api/generate_api_key', {method:'POST'});
+        const response = await fetch('/api/generate_api_key', 
+            {
+                method:'POST',
+                credentials:'include',
+            });
+
              if (response.ok) {
+                const data = await response.json();
+                alert(`API Key: ${data.apiKey}\nExpires At: ${new Date(data.expiresAt).toLocaleString()}`);
             await fetchUser();
         }
     };

@@ -7,12 +7,21 @@ const LoginPage = () => {
   const [password, setPassword] = useState('');
 
 
-  const handleLogin = () => {
-    // Your login logic here
-    console.log('Login button clicked');
-    console.log('Email:', email);
-    console.log('Password:', password);
-  };
+  const handleLogin = async () => {
+    const response = await fetch("/api/login", {
+        method: 'POST',
+        headers: {"Content-Type": "application/json"},
+        credentials: "include",
+        body: JSON.stringify({email, password}),
+    });
+
+    if (response.ok) {
+        window.location.href="/myAccount";
+    }
+    else {
+        alert("Invalid Credentials");
+    }
+};
 
   const handleCancel = () => {
 
@@ -64,13 +73,14 @@ const LoginPage = () => {
                             Forgot your password?
                             </a>
                             <div className="flex justify-center mb-4 space-x-4">
-                            <a href="/myAccount"
+                            <button
                             className="bg-orange-500 hover:bg-orange-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
                         type="button"
                             onClick={() => handleLogin()}
                             >
                             Login
-                        </a>
+                            </button>
+                       
                         
                         <button className="bg-gray-500 hover:bg-gray-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline mr-4" type="button" onClick={() => handleCancel()}>
                             Cancel

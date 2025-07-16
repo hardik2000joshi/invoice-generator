@@ -143,6 +143,12 @@ export default function RootLayout({
         Sign Up
       </Link>
 
+      <Link href="/logout"
+      className="whitespace-nowrap hover:no-underline font-medium group rounded-[8px] text-sm text-[#333] hover:bg-[#5E5E5E] transition duration-150 ease-in-out flex items-center p-[10px] relative"
+      aria-label="Navigate to log out"
+      >
+      Log Out
+      </Link>
       </div>
       </div>
       </header>

@@ -17,6 +17,7 @@ import {
   Twitter,
   User,
   Users,
+  Facebook
 } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
@@ -111,16 +112,20 @@ const Home = () => {
                 </span>
                 <span className="text-xs">users</span>
               </div>
-              <div className="flex flex-col">
+              <a href="/api/downloadInvoice"
+              download
+              className="flex flex-col cursor-pointer"
+              >
                 <div className="flex justify-center items-center gap-2">
                   <Download className="w-4 h-4" />
+                  
                   <span className="text-xs">Download</span>
                 </div>
                 <span className="text-transparent bg-clip-text bg-gradient-to-br from-orange-500 to-pink-400">
                   400K
                 </span>
                 <span className="text-xs">Invoices</span>
-              </div>
+                </a>
             </div>
           </div>
         </div>
@@ -230,15 +235,24 @@ const Home = () => {
             </a>
           </div>*/}
           <div className="border flex justify-center items-center w-10 h-10 border-dashed rounded-lg text-2xl border-gray-300">
-            <a target="_blank" href="https://www.linkedin.com/in/pranavp10/">
+            <a target="_blank" href="https://www.linkedin.com">
               <Linkedin />
             </a>
           </div>
+
           <div className="border flex justify-center items-center w-10 h-10 border-dashed rounded-lg text-2xl border-gray-300">
-            <a target="_blank" href="https://twitter.com/ThatsPranav">
+            <a target="_blank" href="https://twitter.com">
               <Twitter />
             </a>
           </div>
+
+          <div className="border flex justify-center items-center w-10 h-10 border-dashed rounded-lg text-2xl border-gray-300">
+            <a target="_blank" href="https://www.facebook.com">
+              <Facebook />
+            </a>
+
+          </div>
+
           </div>
 
       </div>

@@ -4,6 +4,7 @@ import {useState, useEffect} from 'react';
 
 export default function MyAccountPage() {
     const [user, setUser] = useState<any>(null);
+    const [loading, setLoading] = useState(true);
     const [activeTab, setActiveTab] = useState('dashboard');
 
     const fetchUser = async () => {
@@ -19,7 +20,8 @@ export default function MyAccountPage() {
         else {
             setUser(null);
         }
-    }
+         setLoading(false);
+    };
 
     useEffect(() => {
         fetchUser();
@@ -39,9 +41,26 @@ export default function MyAccountPage() {
         }
     };
 
-    if (!user)  return <div className='flex justify-center items-center h-screen'> Loading... </div>;
-        
+    const handleLogout = async () => {
+        await fetch ('/api/logout', {
+            method: "POST",
+            credentials: 'include',
+        }
+        );
+        window.location.href = '/login';
+    };
 
+     if (loading) {
+        return <p>Loading...</p>;
+    }
+
+    if (!user)  {
+        if (typeof window!=='undefined') {
+            window.location.href = '/login';
+        }
+        return null;
+    }
+    
     return (
         <div className='min-h-screen bg-gray-100 flex'>
             <aside className='w-64 bg-white border-r shadow-sm p-6 space-y-4'>
@@ -68,6 +87,12 @@ export default function MyAccountPage() {
                     <li>
                         <button onClick={() => setActiveTab('apiKeys')} className={`block w-full text-left px-4 py-2 rounded-lg font-medium ${activeTab === 'apiKeys' ? 'bg-gray-200' : 'hover:bg-gray-100'}`}>
                              API Keys
+                        </button>
+                    </li>
+
+                    <li>
+                        <button onClick={handleLogout} className="block w-full text-left px-4 py-2 rounded-lg font-medium text-red-500 hover:bg-red-100">
+                            Logout
                         </button>
                     </li>
                 </ul>

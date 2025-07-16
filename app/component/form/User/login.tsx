@@ -1,4 +1,5 @@
 'use client';
+
 import React, { useState } from 'react';
 
 
@@ -7,7 +8,8 @@ const LoginPage = () => {
   const [password, setPassword] = useState('');
 
 
-  const handleLogin = async () => {
+  const handleLogin = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
     const response = await fetch("/api/login", {
         method: 'POST',
         headers: {"Content-Type": "application/json"},
@@ -24,13 +26,9 @@ const LoginPage = () => {
 };
 
   const handleCancel = () => {
-
-    console.log('Cancel button clicked');
-  }
-
-  const handleSignUp = () => {
-    console.log('Sign-up button clicked');
-  }
+    setEmail('');
+    setPassword('');
+  };
 
 
     return (
@@ -38,7 +36,7 @@ const LoginPage = () => {
             <div className= "bg-white p-8 rounded-lg shadow-md w-96">
                 <h2 className="text-2xl font-bold mb-4">Log in to your account</h2>
                 <p className="text-gray-600 mb-6">Welcome back, we hope you&#39;re <br /> having a great day.</p>
-                <form>
+                <form onSubmit={handleLogin}>
                     <div className="mb-4">
                         <label className="block-text-gray-700 text-sm font-bold mb-2" htmlFor="email">
                             Email
@@ -51,6 +49,7 @@ const LoginPage = () => {
                       placeholder= "Name@example.com"
                       value={email}
                       onChange={(e) => setEmail(e.target.value)}
+                      required
                       />         
                     </div>
 
@@ -65,6 +64,7 @@ const LoginPage = () => {
                         placeholder="******"
                         value={password}
                         onChange={(e) => setPassword(e.target.value)}
+                        required
                         />
                     </div>
 
@@ -75,8 +75,7 @@ const LoginPage = () => {
                             <div className="flex justify-center mb-4 space-x-4">
                             <button
                             className="bg-orange-500 hover:bg-orange-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
-                        type="button"
-                            onClick={() => handleLogin()}
+                        type="submit"
                             >
                             Login
                             </button>

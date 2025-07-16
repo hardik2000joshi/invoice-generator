@@ -12,10 +12,13 @@ export async function POST(request: Request) {
         return NextResponse.json({ message: "Invalid credentials" }, { status: 401 });
     }
 
-    const response = NextResponse.json({ message: "Login successful" });
-    response.cookies.set("userEmail", email, {
-        httpOnly: true,
-        path: "/",
+    const response = new NextResponse(JSON.stringify({ message: "Login Successful" }), {
+        status: 200,
+        headers: {
+            "Set-Cookie": `userEmail=${encodeURIComponent(email)}; Path=/; HttpOnly; SameSite=Lax`,
+            "Content-Type": "application/json",
+        },
     });
+
     return response;
 }

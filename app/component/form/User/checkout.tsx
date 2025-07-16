@@ -1,7 +1,7 @@
 "use client";
 
-import { setRequestMeta } from "next/dist/server/request-meta";
-import React, { useState } from "react";
+import { useSearchParams } from 'next/navigation';
+import React, {useEffect, useState } from "react";
 
 const CheckoutPage = () => {
   // Form state
@@ -19,6 +19,14 @@ const CheckoutPage = () => {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [success, setSuccess] = useState<string | null>(null);
+  const searchParams = useSearchParams();
+  const amountFromQuery = searchParams.get('amount');
+  const [amount, setAmount] = useState(amountFromQuery || '0');
+
+  useEffect(() => {
+    setAmount(amountFromQuery || '0');
+}, [amountFromQuery]);
+
 
   // Toggle discount code visibility
   const handleToggleDiscountCode = () => setShowDiscountCode((show) => !show);
@@ -110,6 +118,7 @@ const CheckoutPage = () => {
       paymentMethod,
       success_redirect,
       failure_redirect,
+      amount,
     };
 
     try {
@@ -191,7 +200,7 @@ const CheckoutPage = () => {
             <div className="pmpro_level_cost_text">
               <p>
                 The price for membership is{" "}
-                <strong>$19.99 per Month</strong>.
+                <strong>${amount} per Month</strong>.
               </p>
             </div>
           </div>

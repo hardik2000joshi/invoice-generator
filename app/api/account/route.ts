@@ -32,7 +32,7 @@ export async function GET(request:Request) {
     }
 
     const validAPIKeys = (user.apiKeys || []).filter(
-        (keyObj:any) => new Date(keyObj.expiresAt) > new Date()
+        (keyObj:any) => !keyObj.expiresAt || new Date(keyObj.expiresAt) > new Date()
     );
 
     // fetch and return user data to frontend

@@ -61,6 +61,7 @@ export async function POST(request: Request) {
       paymentMethod,
       success_redirect,
       failure_redirect,
+      amount,
     } = body;
 
     const fullName = `${firstName} ${lastName}`;
@@ -89,7 +90,7 @@ export async function POST(request: Request) {
         products: [
           {
             name: 'Power Member Monthly',
-            price: '0.5',
+            price: amount,
           },
         ],
       },

@@ -4,7 +4,7 @@ import clientPromise from "@/lib/mongodb";
 export async function GET(request:Request) {
     const client = await clientPromise;
     const db = client.db('testData');
-    const users = db.collection("users");
+    const usersCollection = db.collection("users");
 
     const cookieHeader = request.headers.get("cookie");
     if (!cookieHeader) {
@@ -25,7 +25,7 @@ export async function GET(request:Request) {
         return NextResponse.json({message: 'unauthorized, missing userEmail'}, {status: 404});
     }
 
-    const user = await users.findOne({email:userEmail});
+    const user = await usersCollection.findOne({email:userEmail});
 
     if (!user) {
         return NextResponse.json({message: 'user not found'}, {status:404});

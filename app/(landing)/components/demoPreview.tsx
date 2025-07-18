@@ -25,7 +25,7 @@ const defaultValue = {
     email: "support@prolab.sh",
   },  
   yourDetails: {
-    yourName: "Pranav Patel",
+    yourName: "Deep Marketing Pvt Ltd",
     yourAddress: "6th Main Rd, Eshwara Layout, Indiranagar,",
     yourCity: "Bengaluru",
     yourState: "Karnataka",

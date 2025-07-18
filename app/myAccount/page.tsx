@@ -137,34 +137,57 @@ export default function MyAccountPage() {
                     <section>
 
                         <h2 className='text-2xl font-bold mb-4 text-gray-800'>Payment History</h2>
-                        <div className='grid md:grid-cols-2 gap-4'>
-                            {(() => {
-                                const paymentElements = [];
-                                for (let i=0; i<user.payments.length; i++) {
-                                    const q= user.payments[i];
-                                    paymentElements.push(
-                                         <div key={i} className="bg-white p-4 rounded shadow">
-                                        <div className='text-sm text-gray-500'>
-                                Invoice ID
-                            </div>
-                            <div className='text-lg font-semibold text-gray-900'>
-                               {q.id}
-                               </div>
-                            <div className='mt-1 text-green-600 font-bold'>
-                                {q.amount}
-                            </div>
-                            <div className='text-sm text-gray-400'>
-                                {q.date}
-                            </div>
-                             </div>
-                                    );
-                                }
-                                return paymentElements;
+                        <div className='overflow-x-auto'>
+                            <table className='min-w-full bg-white rounded shadow-md'>
+                                <thead>
+                                   <tr className='bg-gray-100 border-b'>
+                                    <th className='text-left py-2 px-4 text-gray-600'>
+                                        Date
+                                    </th>
+                                    <th className='text-left py-2 px-4 text-gray-600'>
+                                        Payment ID
+                                    </th>
+                                    <th className='text-left py-2 px-4 text-gray-600'>
+                                        Payment Amount (USD)
+                                    </th>
+                                    <th className='text-left py-2 px-4 text-gray-600'>
+                                        Status
+                                    </th>   
+                                   </tr>
+                                </thead>
 
-                            })()}
-                            </div>
-                            </section>
+                                <tbody>
+                                    {user.payments.length === 0 && (
+                                        <tr>
+                                                <td colSpan={4} className='py-4 px-4 text-center text-gray-500'>
+                                                    No Payments Found.
+                                                </td>
+                                        </tr>
+                                    )}
+
+                                    {
+                                        user.payments.map((payment:any, index:number) => (
+                                            <tr key={index} className='border-b'>
+                                                <td className='py-2 px-4'>
+                                                    {payment.date}
+                                                </td>
+                                                <td className='py-2 px-4'>
+                                                    {payment.redirectUrl?.split("/").pop() || 'N/A'}
+                                                </td>
+                                                <td className='py-2 px-4'>
+                                                    {parseFloat(payment.amount).toFixed(2)}
+                                                </td>
+                                                <td className={`py-2 px-4 font-semibold ${payment.status === 'initiated' ? 'text-yellow-500' : 'text-green-600'}`}>
+                                                    {payment.status === 'initiated' ? 'In Progress' : 'success'}
+                                                </td>
+                                            </tr>
+                                        ))}
+                                </tbody>
+                            </table>
+                        </div>
+                         </section>
                    )}
+                           
 
                     {activeTab === 'apiKeys' && (
                         <section>

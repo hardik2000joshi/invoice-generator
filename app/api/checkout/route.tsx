@@ -1,3 +1,6 @@
+
+import clientPromise from '@/lib/mongodb';
+
 function safeURL(input: unknown, fallback: string): string {
   try {
     if (typeof input !== 'string' || !input.trim()) return fallback;
@@ -54,6 +57,8 @@ export async function POST(request: Request) {
 }
 
     const {
+      username,
+      password,
       firstName,
       lastName,
       email,
@@ -142,7 +147,38 @@ export async function POST(request: Request) {
     }
 
     const data = await paysecureResponse.json();
-    console.log("Raw PaySecure Response:", data);
+
+    const client = await clientPromise;
+    const db = client.db('testData');
+
+    await db.collection ("users").updateOne(
+      {email},
+      {
+        $setOnInsert: {
+          username,
+          password,
+          email,
+          payments: [],
+        },
+      },
+      {upsert: true}
+    );
+
+    await db.collection ("users").updateOne(
+      {email},
+      {
+        $push: {
+          payments: {
+            date: new Date(),
+            amount,
+            method: paymentMethod,
+            status: 'initiated',
+            redirectUrl: data.checkout_url || null,
+            paysecureResponse: data,
+          },
+        },
+      }
+    );
 
     // If checkout URL exists, redirect to it
     const checkoutUrl = data.checkout_url || data.direct_post_url;
@@ -179,5 +215,5 @@ export async function POST(request: Request) {
       },
     });
   }
-}
+} 
 

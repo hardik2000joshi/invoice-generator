@@ -41,7 +41,14 @@ export async function GET(request:Request) {
         {
             name: user.name,
             email: user.email,
-            payments: user.payments || [],
+            payments: (user.payments || []).map ((p: any) => ({
+                date: new Date(p.date).toLocaleString(),
+                id: p.paysecureResponse?.purchaseId || 'N/A',
+                amount: p.amount,
+                method: p.method,
+                status: p.status,
+                redirectUrl: p.redirectUrl
+            })),
             apiKeys: validAPIKeys,
         });
 }

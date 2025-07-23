@@ -196,7 +196,7 @@ export async function POST(request: Request) {
         extraParam: payload.extraParam,
           },
         },
-      }
+      } as any,
     );
       
     // If checkout URL exists, redirect to it

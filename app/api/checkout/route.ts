@@ -69,6 +69,9 @@ export async function POST(request: Request) {
       amount,
     } = body;
 
+    console.log("Incoming success_redirect:", success_redirect);
+    console.log("Incoming failure_redirect:", failure_redirect);
+
     const fullName = `${firstName} ${lastName}`;
     const finalSuccessRedirect = safeURL(success_redirect, 'http://localhost:3000/payment-success');
     const finalFailureRedirect = safeURL(failure_redirect, 'http://localhost:3000/payment-failure');
@@ -118,6 +121,7 @@ export async function POST(request: Request) {
       failure_callback: 'http://localhost:3000/paysecure/failure-callback',
     };
 
+
     const paysecureResponse = await fetch(paysecureAPIBaseUrl, {
       method: 'POST',
       headers: {
@@ -151,35 +155,50 @@ export async function POST(request: Request) {
     const client = await clientPromise;
     const db = client.db('testData');
 
+    function extractFromURL(url: string | undefined): string | null {
+      if (!url) return null;
+      const match = url.match(/\/payments\/([a-zA-Z0-9]+)/);
+      if (match && match[1]) {
+        return match [1];
+      }
+      return null;
+    }
+
     await db.collection ("users").updateOne(
       {email},
       {
-        $setOnInsert: {
+        $set: {
+          name: fullName,
           username,
           password,
           email,
+        },
+        $setOnInsert: {
           payments: [],
+          apiKeys : [],
         },
       },
       {upsert: true}
     );
 
-    await db.collection ("users").updateOne(
+    await db.collection("users").updateOne(
       {email},
       {
         $push: {
-          payments: {
+          payments:{
             date: new Date(),
-            amount,
-            method: paymentMethod,
-            status: 'initiated',
-            redirectUrl: data.checkout_url || null,
-            paysecureResponse: data,
+        amount,
+        method: paymentMethod,
+        status: 'initiated',
+        paymentId: data.payment_id || extractFromURL(data.checkout_url),
+        redirectUrl: data.checkout_url || data.direct_post_url || 'http://localhost:3000/payment-failure',
+        paysecureResponse: data,
+        extraParam: payload.extraParam,
           },
         },
       }
     );
-
+      
     // If checkout URL exists, redirect to it
     const checkoutUrl = data.checkout_url || data.direct_post_url;
 
@@ -195,9 +214,10 @@ export async function POST(request: Request) {
     } else {
       // If no checkout URL is provided, return failure redirect
       return new Response(JSON.stringify({
+        redirectUrl: 'http://localhost:3000/payment-failure',
         message: data?.message || 'Checkout URL not available.',
       }), {
-        status: 400, // Bad request, no checkout URL provided
+        status: 200, // request successful
         headers: {
           'Content-Type': 'application/json',
           ...corsHeaders,

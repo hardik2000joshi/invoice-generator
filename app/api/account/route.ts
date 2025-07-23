@@ -31,9 +31,9 @@ export async function GET(request:Request) {
         return NextResponse.json({message: 'user not found'}, {status:404});
     }
 
-    const validAPIKeys = (user.apiKeys || []).filter(
-        (keyObj:any) => !keyObj.expiresAt || new Date(keyObj.expiresAt) > new Date()
-    );
+    const activeAPIKeys = (user.apiKeys || []).filter(
+    (keyObj: any) => keyObj.isActive
+  );
 
     // fetch and return user data to frontend
     // frontend should receive only active keys
@@ -42,13 +42,14 @@ export async function GET(request:Request) {
             name: user.name,
             email: user.email,
             payments: (user.payments || []).map ((p: any) => ({
-                date: new Date(p.date).toLocaleString(),
+                date: (p.date)?new Date(p.date).toLocaleString():'N/A',
                 id: p.paysecureResponse?.purchaseId || 'N/A',
+                paymentId: p.paymentId || 'N/A',
                 amount: p.amount,
                 method: p.method,
                 status: p.status,
                 redirectUrl: p.redirectUrl
             })),
-            apiKeys: validAPIKeys,
+            apiKeys: activeAPIKeys,
         });
 }

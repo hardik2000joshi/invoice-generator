@@ -1,6 +1,5 @@
 import { NextResponse } from "next/server";
 import clientPromise from "@/lib/mongodb";
-import { error } from "console";
 
 export async function POST(request:Request) {
     const client = await clientPromise;
@@ -34,19 +33,16 @@ export async function POST(request:Request) {
         return NextResponse.json({error: 'No User Found'}, {status:400});
     }
 
-    const lastPayment = [...(user.payments || [])]
-    .reverse()
-    .find(p => p.status === 'initiated');
+    const payments = user.payments || [];
+    const initiatedPayments = payments.filter((p:any) => p.status === 'initiated' && p?.paysecureResponse?.purchaseId);
 
-    if (!lastPayment) {
-        return NextResponse.json({message: 'No Payment Initiated.'});
-    }
+    for (const payment of initiatedPayments) {
+        const purchaseId = payment?.paysecureResponse?.purchaseId;
 
-    const purchaseId = lastPayment?.paysecureResponse?.purchaseId;
-    if (!purchaseId) {
-        return NextResponse.json({message: 'purchaseId not found'});
-    }
-
+        if (!purchaseId) {
+            console.warn("skipping invalid purchaseId:", purchaseId);
+            continue;
+        }
     const response = await fetch(`https://staging.paysecure.net/api/v1/purchases/${purchaseId}`, {
         headers: {
             Authorization: `Bearer ${process.env.PAYSECURE_TOKEN}`,
@@ -64,7 +60,13 @@ export async function POST(request:Request) {
     { email, 'payments.paysecureResponse.purchaseId': purchaseId },
     { $set: { 'payments.$.status': payStatus } }
   );
+}
 
-   return NextResponse.json({ message: `Payment marked as ${payStatus}` });
+      const updatedUser = await db.collection('users').findOne({ email });
 
+  
+    return NextResponse.json({
+        message: 'Payments updated',
+        payments: updatedUser?.payments || [],
+    });
 }

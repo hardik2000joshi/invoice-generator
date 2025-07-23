@@ -5,10 +5,11 @@ import Link from "next/link";
 import Script from "next/script";
 
 function getValidURL(raw: string | undefined, fallback: string) {
-  const value = (raw || "").trim().toLowerCase();
-  if (!value || value === "null" || value === "undefined") {
+  if (!raw || raw.trim() === "" || raw.trim() === "null" || raw.trim() === "undefined") {
     return fallback;
   }
+  
+  const value = raw.trim();
   try {
     new URL(value);
     return value;

@@ -10,7 +10,7 @@ export async function POST (request:Request) {
 
     const cookieHeader = request.headers.get("cookie");
     if (!cookieHeader) {
-        return NextResponse.json({message: "unauthorized, no cookies found"}, {status: 404});
+        return NextResponse.json({message: "unauthorized, no cookies found"}, {status: 401});
     }
 
     const cookiesobj: Record<string, string> = {};
@@ -26,28 +26,28 @@ export async function POST (request:Request) {
         return NextResponse.json({message: 'unauthorized, missing userEmail'}, {status: 404});
     }
 
+    const user = await users.findOne({email: userEmail});
+    if (!user) {
+      return NextResponse.json({message: "User not found"}, {status: 404});
+    } 
+
     const newApiKey = crypto.randomBytes(32).toString("hex");
 
-    const result = await users.updateOne(
+    await users.updateOne(
   { email: userEmail },
   {
     $push: {
-      apiKeys: {
+      apiKeys:{
         key: newApiKey,
         createdAt: new Date(),
-        expiresAt: new Date(Date.now() + 1000 * 60 * 60 * 24 * 30),
+        isActive: true,
       },
-    },
-  } as any
-);
-
-if (result.modifiedCount === 0) {
-  return NextResponse.json({ message: "API key not saved." }, { status: 500 });
-}
+     },
+    } as any
+    );
 
     return NextResponse.json({
       message: "API Key generated successfully",
       apiKey: newApiKey,
-      expiresAt: new Date (Date.now() + 1000 * 60 * 60 * 24 * 30),
     });
 }

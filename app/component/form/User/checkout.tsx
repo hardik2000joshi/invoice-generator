@@ -99,8 +99,13 @@ const CheckoutPage = () => {
       return;
     }
 
-    const success_redirect = "http://localhost:3000/payment-success";
-    const failure_redirect = "http://localhost:3000/payment-failure";
+    const origin =
+      typeof window !== 'undefined'
+        ? window.location.origin
+        : 'http://localhost:3000';
+
+    const success_redirect = `${origin}/payment-success`;
+    const failure_redirect = `${origin}/payment-failure`;
 
     if (!success_redirect || !failure_redirect) {
       setError('Missing redirect URLs');
@@ -114,10 +119,10 @@ const CheckoutPage = () => {
       firstName,
       lastName,
       email,
-      discountCode: discountCode || null,
-      paymentMethod,
-      success_redirect,
-      failure_redirect,
+      discountCode: discountCode?.trim() || "",
+      paymentMethod: paymentMethod?.trim() || "",
+      success_redirect: success_redirect?.trim() || "",
+      failure_redirect: failure_redirect?.trim() || "",
       amount,
     };
 
@@ -129,8 +134,7 @@ const CheckoutPage = () => {
         },
         body: JSON.stringify(payload),
       });
-      debugger;
-      console.log("yudfgvuadfgjhf",response);
+
       if (!response.ok) {
         const errorText = await response.text();
         console.error("Checkout request failed:", errorText);
@@ -141,11 +145,12 @@ const CheckoutPage = () => {
 
       const result = await response.json();
 
-      if (result.redirectUrl) {
+      if (result.redirectUrl && typeof result.redirectUrl === 'string' && result.redirectUrl.startsWith('http')) {
         console.log('Redirecting to:', result.redirectUrl);
         window.location.href = result.redirectUrl;
       }
       else {
+        console.warn("No redirectUrl found, redirecting to /payment-failure");
         setError(result.message || "Checkout failed. Please try again.");
       }
 

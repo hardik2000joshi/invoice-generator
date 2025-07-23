@@ -15,3 +15,10 @@ export async function POST(request: Request) {
         return NextResponse.json({error: "Invalid webhook"}, {status: 400});
     }
 }
+
+export async function GET() {
+    return NextResponse.json({
+        status: "Webhook endpoint is active",
+        message: "This endpoint is for receiving POST requests from payment gateway.",
+    });
+}

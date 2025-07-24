@@ -150,7 +150,7 @@
 
                     <p className='mb-2'>
                         We may update this Privacy Policy from time to time. Any changes will be posted on this page <br />
-                        with an updated "Last Updated" date.
+                        with an updated &quot;Last Updated&quot; date.
                     </p>
                 </section>
 <br />

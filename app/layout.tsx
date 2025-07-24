@@ -180,7 +180,7 @@ export default function RootLayout({
             Contact Us
           </Link>
 
-          <Link href='/terms & conditions'
+          <Link href='/terms-conditions'
           className="hover: underline transition duration-150 ease-in-out"
           >
             Terms & Conditions

@@ -1,7 +1,7 @@
 import fetch from 'node-fetch';
 
 async function test() {
-  const res = await fetch('https://staging.paysecure.net/api/v1/purchases/', {
+  const res = await fetch('https://api.paysecure.net/api/v1/purchases/', {
     method: 'POST',
     headers: {
       'Authorization': 'Bearer TEST',

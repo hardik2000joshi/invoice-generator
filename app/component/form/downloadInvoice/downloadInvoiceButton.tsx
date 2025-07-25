@@ -1,13 +1,11 @@
 "use client";
 
 import { Button } from "@/components/ui/button";
-import { Document, Font, Page, Text } from "@react-pdf/renderer";
 import { CheckCircle2, Download, LoaderIcon, SplineIcon } from "lucide-react";
 import { PdfDetails } from "../pdfDetails";
 import { useData } from "@/app/hooks/useData";
 import { pdfContainers } from "@/lib/pdfStyles";
 import { saveAs } from "file-saver";
-import { pdf } from "@react-pdf/renderer";
 import { svgToDataUri } from "@/lib/svgToDataUri";
 import { useEffect, useState } from "react";
 import { currencyList } from "@/lib/currency";
@@ -33,6 +31,36 @@ export const DownloadInvoiceButton = () => {
     }
   }, [status]);
 
+  const handleDownload = async () => {
+    setStatus("downloading");
+
+    try {
+      const response = await fetch("/api/downloadInvoice", {
+        method: "POST",
+        credentials: 'include',
+      });
+      if (response.ok) {
+        const blob = await response.blob();
+        const url = window.URL.createObjectURL(blob);
+        const link = document.createElement("a");
+        link.href = url;
+        link.download = "invoices.pdf";
+        link.click();
+        window.URL.revokeObjectURL(url);
+        setStatus("downloaded");
+      }
+      else {
+        console.error("Download Failed");
+        setStatus("not-downloaded");
+      }
+    }
+
+    catch(error) {
+      console.error("Download Error:", error);
+      setStatus("not-downloaded");
+    }
+  };
+
   return (
     <div className="flex h-[calc(100vh-208px)] justify-center items-center">
       <div>
@@ -42,72 +70,7 @@ export const DownloadInvoiceButton = () => {
         </p>
         <Button
           disabled={status === "downloading"}
-          onClick={async () => {
-            try {
-              setStatus("downloading");
-              const currencyDetails = currencyList.find(
-                (currencyDetail) =>
-                  currencyDetail.value.toLowerCase() ===
-                  invoiceDetails.currency.toLowerCase()
-              )?.details;
-
-              const defaultCurrency = currencyList.find(
-                (currencyDetail) =>
-                  currencyDetail.value.toLowerCase() === "INR".toLowerCase()
-              )?.details;
-
-              const data = await fetch(
-                `/flag/1x1/${
-                  currencyDetails?.iconName || defaultCurrency?.iconName
-                }.svg`
-              );
-              const svgFlag = await data.text();
-              const countryImageUrl = await svgToDataUri(svgFlag);
-              if (countryImageUrl) {
-                console.log("companyDetails", companyDetails);
-                console.log("invoiceDetails", invoiceDetails);
-                console.log("invoiceTerms", invoiceTerms);
-                console.log("paymentDetails", paymentDetails);
-                console.log("yourDetails", yourDetails);
-                console.log("countryImageUrl", countryImageUrl);
-
-                const isDataValid =
-                companyDetails && typeof companyDetails === "object" &&
-                invoiceDetails && typeof invoiceDetails === "object" &&
-                invoiceTerms && typeof invoiceTerms === "object" &&
-                paymentDetails && typeof paymentDetails === "object" &&
-                yourDetails && typeof yourDetails === "object";
-
-                const blob = await pdf( 
-                  <Document>
-                    <Page size="A4" style={pdfContainers.page}>
-                       {isDataValid ? (
-                     <PdfDetails
-                     companyDetails={JSON.parse(JSON.stringify(companyDetails))}
-                     invoiceDetails={JSON.parse(JSON.stringify(invoiceDetails))}
-                     invoiceTerms={JSON.parse(JSON.stringify(invoiceTerms))}
-                     paymentDetails={JSON.parse(JSON.stringify(paymentDetails))}
-                     yourDetails={JSON.parse(JSON.stringify(yourDetails))}
-                     countryImageUrl={countryImageUrl || ""}
-/>
-
-                       ) : (
-                        <Text>Missing invoice data. Cannot render PDF.</Text>
-                       )
-                      }
-                    </Page>
-                  </Document>
-                ).toBlob();
-                saveAs(blob, "invoice.pdf");
-                setStatus("downloaded");
-              } else {
-                setStatus("not-downloaded");
-              }
-            } catch (e) {
-              console.error(e);
-              setStatus("not-downloaded");
-            }
-          }}
+          onClick= {handleDownload}
           type="button"
           className="w-full h-12 rounded-lg text-lg"
         >
@@ -133,41 +96,3 @@ export const DownloadInvoiceButton = () => {
     </div>
   );
 };
-
-Font.register({
-  family: "Geist",
-  fonts: [
-    {
-      src: "/font/Geist-Thin.ttf",
-      fontWeight: "thin",
-    },
-    {
-      src: "/font/Geist-Ultralight.ttf",
-      fontWeight: "ultralight",
-    },
-    {
-      src: "/font/Geist-Light.ttf",
-      fontWeight: "light",
-    },
-    {
-      src: "/font/Geist-Regular.ttf",
-      fontWeight: "normal",
-    },
-    {
-      src: "/font/Geist-Medium.ttf",
-      fontWeight: "medium",
-    },
-    {
-      src: "/font/Geist-SemiBold.ttf",
-      fontWeight: "semibold",
-    },
-    {
-      src: "/font/Geist-Bold.ttf",
-      fontWeight: "bold",
-    },
-    {
-      src: "/font/Geist-UltraBlack.ttf",
-      fontWeight: "ultrabold",
-    },
-  ],
-});

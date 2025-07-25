@@ -26,7 +26,7 @@ function safeURL(input: unknown, fallback: string): string {
 }
 
 const corsHeaders = {
-  'Access-Control-Allow-Origin': 'http://localhost:3000',
+  'Access-Control-Allow-Origin': 'https://tedtools.com/',
   'Access-Control-Allow-Methods': 'GET, POST, OPTIONS',
   'Access-Control-Allow-Headers': 'Content-Type, Authorization',
 };
@@ -39,8 +39,8 @@ export async function OPTIONS() {
 }
 
 export async function POST(request: Request) {
-  const token = process.env.NEXT_PUBLIC_PAYSECURE_API_KEY;
-  const brandId = process.env.NEXT_PUBLIC_PAYSECURE_BRAND_ID;
+  const token = process.env.PAYSECURE_API_KEY;
+  const brandId = process.env.PAYSECURE_BRAND_ID;
   const paysecureAPIBaseUrl = 'https://api.paysecure.net/api/v1/purchases/';
 
   try {
@@ -73,8 +73,8 @@ export async function POST(request: Request) {
     console.log("Incoming failure_redirect:", failure_redirect);
 
     const fullName = `${firstName} ${lastName}`;
-    const finalSuccessRedirect = safeURL(success_redirect, 'http://localhost:3000/payment-success');
-    const finalFailureRedirect = safeURL(failure_redirect, 'http://localhost:3000/payment-failure');
+    const finalSuccessRedirect = safeURL(success_redirect, 'https://tedtools.com/payment-success');
+    const finalFailureRedirect = safeURL(failure_redirect, 'https://tedtools.com/payment-failure');
 
     console.log('success_redirect:', success_redirect);
     console.log('finalSuccessRedirect:', finalSuccessRedirect);
@@ -191,7 +191,7 @@ export async function POST(request: Request) {
         method: paymentMethod,
         status: 'initiated',
         paymentId: data.payment_id || extractFromURL(data.checkout_url),
-        redirectUrl: data.checkout_url || data.direct_post_url || 'http://localhost:3000/payment-failure',
+        redirectUrl: data.checkout_url || data.direct_post_url || 'https://tedtools.com/payment-failure',
         paysecureResponse: data,
         extraParam: payload.extraParam,
           },
@@ -214,7 +214,7 @@ export async function POST(request: Request) {
     } else {
       // If no checkout URL is provided, return failure redirect
       return new Response(JSON.stringify({
-        redirectUrl: 'http://localhost:3000/payment-failure',
+        redirectUrl: 'https://tedtools.com/payment-failure',
         message: data?.message || 'Checkout URL not available.',
       }), {
         status: 200, // request successful

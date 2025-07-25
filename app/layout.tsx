@@ -30,7 +30,7 @@ function getSafeURLObject(raw: string | undefined, fallback: string) {
   }
 }
 
-const baseUrl = getValidURL(process.env.NEXT_PUBLIC_URL, "http://localhost:3000");
+const baseUrl = getValidURL(process.env.NEXT_PUBLIC_URL, "https://tedtools.com/");
 console.log("DEBUG: process.env.NEXT_PUBLIC_URL =", process.env.NEXT_PUBLIC_URL);
 console.log("DEBUG: baseUrl =", baseUrl);
 
@@ -41,7 +41,7 @@ export const viewport: Viewport = {
 };
 
 export const metadata: Metadata = {
-  metadataBase: getSafeURLObject(process.env.NEXT_PUBLIC_URL, "http://localhost:3000"),
+  metadataBase: getSafeURLObject(process.env.NEXT_PUBLIC_URL, "https://tedtools.com/"),
   alternates: {
     canonical: "/",
     languages: {

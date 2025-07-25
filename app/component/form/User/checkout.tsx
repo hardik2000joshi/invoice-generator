@@ -102,7 +102,7 @@ const CheckoutPage = () => {
     const origin =
       typeof window !== 'undefined'
         ? window.location.origin
-        : 'http://localhost:3000';
+        : process.env.NEXT_PUBLIC_URL || 'https://tedtools.com/';
 
     const success_redirect = `${origin}/payment-success`;
     const failure_redirect = `${origin}/payment-failure`;

@@ -43,7 +43,7 @@ export async function POST(request:Request) {
             console.warn("skipping invalid purchaseId:", purchaseId);
             continue;
         }
-    const response = await fetch(`https://staging.paysecure.net/api/v1/purchases/${purchaseId}`, {
+    const response = await fetch(`https://api.paysecure.net/api/v1/purchases/${purchaseId}`, {
         headers: {
             Authorization: `Bearer ${process.env.PAYSECURE_TOKEN}`,
         },

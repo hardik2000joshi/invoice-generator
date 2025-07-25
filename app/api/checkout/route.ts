@@ -40,7 +40,7 @@ export async function OPTIONS() {
 
 export async function POST(request: Request) {
   const token = process.env.PAYSECURE_API_KEY;
-  const brandId = process.env.PAYSECURE_BRAND_ID;
+  const brandID = process.env.PAYSECURE_BRAND_ID;
   const paysecureAPIBaseUrl = 'https://api.paysecure.net/api/v1/purchases/';
 
   try {
@@ -103,7 +103,7 @@ export async function POST(request: Request) {
         ],
       },
       status: 'created',
-      brand_id: brandId,
+      brand_id: brandID,
       success: true,
       send_receipt: true,
       skip_capture: false,

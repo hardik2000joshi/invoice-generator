@@ -14,7 +14,7 @@ const DemoPreview = () => (
 
 const defaultValue = {
   companyDetails: {
-    /*companyName: "Prolab Inc",*/
+    companyName: "Nestle",
     companyAddress: "1600 Amphitheatre Parkway",
     companyCity: "Mountain View",
     companyState: "CA",
@@ -22,7 +22,7 @@ const defaultValue = {
     /*companyLogo: "/android-chrome-192x192.png",*/
     companyTaxId: "",
     companyZip: "94043",
-    email: "support@prolab.sh",
+    email: "accounts.payable@nestle-demo.com",
   },  
   yourDetails: {
     yourName: "Deep Marketing Pvt Ltd",
@@ -30,19 +30,19 @@ const defaultValue = {
     yourCity: "Bengaluru",
     yourState: "Karnataka",
     yourCountry: "India",
-    yourLogo: "/pranav.png",
-    yourEmail: "hi@pranavp.xyz",
+    /*yourLogo: "/pranav.png",*/
+    yourEmail: "hi@deepMarketing123abc",
     yourTaxId: "",
     yourZip: "560038",
   },
   paymentDetails: {
     bankName: "Axis Bank",
     accountNumber: "1234567890",
-    accountName: "PRANAV",
+    accountName: "Deep Marketing",
     routingCode: "123456",
     swiftCode: "AXISINBB1234",
     ifscCode: "UTIB0000000",
-    currency: "INR",
+    currency: "AED",
   },
   invoiceTerms: {
     invoiceNumber: "Invoice #25",
@@ -65,7 +65,7 @@ const defaultValue = {
         qty: 0,
       },
     ],
-    currency: "INR",
+    currency: "AED",
   },
 };
 export default DemoPreview;

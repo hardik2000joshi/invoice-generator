@@ -164,7 +164,7 @@
                             If you have any questions or concerns about this Privacy Policy, please contact us at:
                             <br />
                             Email: 
-                           <Link href="https://tedtools.com/contactUs" className='text-blue-600 underline'>
+                           <Link href="mailto:support@tedtools.com" className='text-blue-600 underline'>
                            support@tedtools.com
                            </Link>
                             </p>

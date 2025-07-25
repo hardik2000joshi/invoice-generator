@@ -15,6 +15,7 @@ import {
   GB,
   FlagComponent,
   ID,
+  AE,
 } from "country-flag-icons/react/1x1";
 
 export const currencyList: {
@@ -207,6 +208,19 @@ export const currencyList: {
       currencyShortForm: "IDR",
       icon: ID,
       iconName: "ID",
+    },
+  },
+
+  {
+    value: "AED",
+    label: "AED",
+    details: {
+      country: "United Arab Emirates",
+      currencySymbol: "د.إ",
+      currencyName: "United Arab Emirates Dirham",
+      currencyShortForm: "AED",
+      icon: AE,
+      iconName: "AE",
     },
   },
 ];

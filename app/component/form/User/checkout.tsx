@@ -470,7 +470,7 @@ const CheckoutPage = () => {
             />
             <span className="text-sm">
               I agree to the{" "}
-              <a href="#" className="text-blue-600 hover:underline">
+              <a href="/terms-conditions" className="text-blue-600 hover:underline">
                 Terms & Conditions
               </a>{" "}
               *
@@ -484,7 +484,7 @@ const CheckoutPage = () => {
               Your personal data will be used to process your order, support
               your experience throughout this website, and for other purposes
               described in our{" "}
-              <a href="#" className="text-blue-500 hover:underline">
+              <a href="/privacy-policy" className="text-blue-500 hover:underline">
                 privacy policy
               </a>
             </p>

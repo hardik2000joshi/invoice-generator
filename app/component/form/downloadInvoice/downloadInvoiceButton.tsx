@@ -1,7 +1,7 @@
 "use client";
 
 import { Button } from "@/components/ui/button";
-import { Document, Font, Page } from "@react-pdf/renderer";
+import { Document, Font, Page, Text } from "@react-pdf/renderer";
 import { CheckCircle2, Download, LoaderIcon, SplineIcon } from "lucide-react";
 import { PdfDetails } from "../pdfDetails";
 import { useData } from "@/app/hooks/useData";
@@ -64,17 +64,37 @@ export const DownloadInvoiceButton = () => {
               const svgFlag = await data.text();
               const countryImageUrl = await svgToDataUri(svgFlag);
               if (countryImageUrl) {
-                const blob = await pdf(
+                console.log("companyDetails", companyDetails);
+                console.log("invoiceDetails", invoiceDetails);
+                console.log("invoiceTerms", invoiceTerms);
+                console.log("paymentDetails", paymentDetails);
+                console.log("yourDetails", yourDetails);
+                console.log("countryImageUrl", countryImageUrl);
+
+                const isDataValid =
+                companyDetails && typeof companyDetails === "object" &&
+                invoiceDetails && typeof invoiceDetails === "object" &&
+                invoiceTerms && typeof invoiceTerms === "object" &&
+                paymentDetails && typeof paymentDetails === "object" &&
+                yourDetails && typeof yourDetails === "object";
+
+                const blob = await pdf( 
                   <Document>
                     <Page size="A4" style={pdfContainers.page}>
-                      <PdfDetails
-                        companyDetails={companyDetails}
-                        invoiceDetails={invoiceDetails}
-                        invoiceTerms={invoiceTerms}
-                        paymentDetails={paymentDetails}
-                        yourDetails={yourDetails}
-                        countryImageUrl={countryImageUrl}
-                      />
+                       {isDataValid ? (
+                     <PdfDetails
+                     companyDetails={JSON.parse(JSON.stringify(companyDetails))}
+                     invoiceDetails={JSON.parse(JSON.stringify(invoiceDetails))}
+                     invoiceTerms={JSON.parse(JSON.stringify(invoiceTerms))}
+                     paymentDetails={JSON.parse(JSON.stringify(paymentDetails))}
+                     yourDetails={JSON.parse(JSON.stringify(yourDetails))}
+                     countryImageUrl={countryImageUrl || ""}
+/>
+
+                       ) : (
+                        <Text>Missing invoice data. Cannot render PDF.</Text>
+                       )
+                      }
                     </Page>
                   </Document>
                 ).toBlob();

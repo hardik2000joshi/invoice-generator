@@ -173,7 +173,7 @@ export default function TermsandConditions() {
                 </h2>
                 <p>
                     For questions or concerns regarding these Terms, contact us at: <br />
-                    <strong>Email:</strong> <Link href="https://tedtools.com/contactUs" className='text-blue-600 underline'>support@tedtools.com</Link>
+                    <strong>Email:</strong> <Link href="mailto:support@tedtools.com" className='text-blue-600 underline'>support@tedtools.com</Link>
                 </p>
             </section>
 

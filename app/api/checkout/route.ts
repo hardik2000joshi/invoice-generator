@@ -39,9 +39,9 @@ export async function OPTIONS() {
 }
 
 export async function POST(request: Request) {
-  const token = process.env.PAYSECURE_TOKEN!;
-  const brandId = process.env.PAYSECURE_BRAND_ID!;
-  const paysecureAPIBaseUrl = 'https://staging.paysecure.net/api/v1/purchases/';
+  const token = process.env.NEXT_PUBLIC_PAYSECURE_API_KEY;
+  const brandId = process.env.NEXT_PUBLIC_PAYSECURE_BRAND_ID;
+  const paysecureAPIBaseUrl = 'https://api.paysecure.net/api/v1/purchases/';
 
   try {
     const body = await request.json();
@@ -117,8 +117,8 @@ export async function POST(request: Request) {
 
       success_redirect: finalSuccessRedirect,
       failure_redirect: finalFailureRedirect,
-      success_callback: 'http://localhost:3000/paysecure/success-callback',
-      failure_callback: 'http://localhost:3000/paysecure/failure-callback',
+      success_callback: 'https://tedtools.com/paysecure/success-callback',
+      failure_callback: 'https://tedtools.com/paysecure/failure-callback',
     };
 
 

@@ -26,7 +26,7 @@ function safeURL(input: unknown, fallback: string): string {
 }
 
 const corsHeaders = {
-  'Access-Control-Allow-Origin': 'https://tedtools.com/',
+  'Access-Control-Allow-Origin': 'https://tedtools.com',
   'Access-Control-Allow-Methods': 'GET, POST, OPTIONS',
   'Access-Control-Allow-Headers': 'Content-Type, Authorization',
 };
@@ -81,6 +81,7 @@ export async function POST(request: Request) {
     console.log('finalSuccessRedirect:', finalSuccessRedirect);
     console.log('failure_redirect:', failure_redirect);
     console.log('finalFailureRedirect:', finalFailureRedirect);
+    console.log('brandID:', brandID);
 
     const payload = {
       client: {

@@ -177,8 +177,8 @@ export default function MyAccountPage() {
                                                 <td className='py-2 px-4'>
                                                     {parseFloat(payment.amount).toFixed(2)}
                                                 </td>
-                                                <td className={`py-2 px-4 font-semibold ${payment.status === 'initiated' ? 'text-yellow-500' : 'text-green-600'}`}>
-                                                    {payment.status === 'initiated' ? 'In Progress' : 'success'}
+                                                <td className={`py-2 px-4 font-semibold ${payment.status === 'initiated' ? 'text-yellow-500' : payment.status === 'failed' ? 'text-red-600' : 'text-green-600'}`}>
+                                                    {payment.status === 'initiated' ? 'In Progress' : payment.status === 'failed' ? 'Failed' : 'success'}
                                                 </td>
                                             </tr>
                                         ))}

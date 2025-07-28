@@ -1,6 +1,5 @@
 "use client";
 
-import { console } from 'inspector';
 import { useSearchParams } from 'next/navigation';
 import React, {useEffect, useState } from "react";
 

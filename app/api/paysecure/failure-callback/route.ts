@@ -1,10 +1,10 @@
-import { NextRequest, NextResponse } from "next/server";
+import { NextResponse } from "next/server";
 import clientPromise from "@/lib/mongodb";
 
 export async function POST(req: Request) {
     try {
     const body = await req.json();
-    console.log("Failure Callback:", body);
+    console.log("Failure Callback Body:", JSON.stringify(body, null, 2));
 
     const purchaseId = body?.message?.purchaseId;
 
@@ -16,12 +16,21 @@ export async function POST(req: Request) {
     const db = client.db("testData");
 
     // update payment status to 'failed'
-    await db.collection("payments").updateOne(
-        {purchaseId},
-        {$set: {status: "failed"}}
+    const result = await db.collection("users").updateOne(
+        {"payments.paysecureResponse.purchaseId": purchaseId},
+        {$set: 
+            {"payments.$.status": "failed",
+            },
+        }
     );
 
-    return NextResponse.json ({message: "Failure Callback Received"}, { status: 200 });
+    if (result.modifiedCount === 0) {
+      return NextResponse.json({ error: "No matching payment found" }, { status: 404 });
+    }
+
+    console.log("Payment status updated to 'failed' for purchaseId:", purchaseId);
+
+    return NextResponse.json ({message: "Payment marked as failed"}, { status: 200 });
     }
 
     catch (err) {

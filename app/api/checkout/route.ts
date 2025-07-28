@@ -118,7 +118,7 @@ export async function POST(request: Request) {
       },
 
       success_redirect: "https://tedtools.com/payment-success",
-      failure_redirect: "https://tedtools.com/payment-failure",
+      failure_redirect: "https://tedtools.com/api/payment-failure-redirect",
       success_callback: 'https://tedtools.com/api/paysecure/success-callback',
       failure_callback: 'https://tedtools.com/api/paysecure/failure-callback',
     };

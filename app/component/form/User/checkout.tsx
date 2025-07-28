@@ -1,5 +1,6 @@
 "use client";
 
+import { console } from 'inspector';
 import { useSearchParams } from 'next/navigation';
 import React, {useEffect, useState } from "react";
 
@@ -127,6 +128,7 @@ const CheckoutPage = () => {
     };
 
     try {
+      console.log("sending payload to /api/checkout:", )
       const response = await fetch("/api/checkout", {
         method: "POST",
         headers: {
@@ -135,15 +137,18 @@ const CheckoutPage = () => {
         body: JSON.stringify(payload),
       });
 
+      console.log("Response status:", response.status);
+
+      const responseText = await response.text();
+      console.log("Raw response body:", responseText);
+
       if (!response.ok) {
-        const errorText = await response.text();
-        console.error("Checkout request failed:", errorText);
+        console.error("Checkout request failed:", responseText);
         setError("Checkout request failed. Please try again.");
-        setLoading(false);
         return;
       }
 
-      const result = await response.json();
+      const result = JSON.parse(responseText);
 
       if (result.redirectUrl && typeof result.redirectUrl === 'string' && result.redirectUrl.startsWith('http')) {
         console.log('Redirecting to:', result.redirectUrl);

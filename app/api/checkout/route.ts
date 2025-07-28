@@ -39,6 +39,7 @@ export async function OPTIONS() {
 }
 
 export async function POST(request: Request) {
+  console.log("/api/checkout route hit");
   const token = process.env.PAYSECURE_API_KEY;
   const brandID = process.env.PAYSECURE_BRAND_ID;
   const paysecureAPIBaseUrl = 'https://api.paysecure.net/api/v1/purchases/';

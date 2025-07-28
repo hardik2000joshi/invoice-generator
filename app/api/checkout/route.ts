@@ -143,7 +143,9 @@ export async function POST(request: Request) {
 
       console.error("PaySecure API Error:", errorData);
 
-      return new Response(JSON.stringify({ error: 'API request failed' }), {
+      return new Response(JSON.stringify({ error: 'API request failed',
+        details: errorData,
+       }), {
         status: 500,
         headers: {
           'Content-Type': 'application/json',

@@ -17,7 +17,7 @@ export async function POST(req: Request) {
 
     // update payment status to 'failed'
     const result = await db.collection("users").updateOne(
-        {"payments.paysecureResponse.purchaseId": purchaseId},
+        {"payments.paymentId": purchaseId},
         {$set: 
             {"payments.$.status": "failed",
             },

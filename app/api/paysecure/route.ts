@@ -1,7 +1,14 @@
 export async function POST (request: Request) {
     const token = process.env.PAYSECURE_TOKEN!;
     const brandId= process.env.PAYSECURE_BRAND_ID!;
-    const paysecureAPIBaseUrl= 'https://staging.paysecure.net/api/v1/purchases/';
+    const paysecureAPIBaseUrl= process.env.PAYSECURE_API_BASE_URL;
+
+    if (!token || !brandId || !paysecureAPIBaseUrl) {
+  return new Response(JSON.stringify({ error: "Server misconfiguration" }), {
+    status: 500,
+    headers: { 'Content-Type': 'application/json' }
+  });
+}
 
     try {
         const body = await request.json();
@@ -30,7 +37,7 @@ export async function POST (request: Request) {
         ],
       },
       status: 'created',
-      brand_id: body.brand_id || '9ca5f4f0-5fad-4eed-a12b-c40102ec852b',
+      brand_id: brandId,
       success: true,
       send_receipt: body.send_receipt || '',
       skip_capture: body.skip_capture || '',
@@ -38,10 +45,10 @@ export async function POST (request: Request) {
         showCryptoConversion: 'yes',
         IsCryptoPurchase: 'yes',
       },
-      success_redirect: body.success_redirect || 'https://your.success.redirect.com',
-      failure_redirect: body.failure_redirect || 'https://your.failure.redirect.com',
-      success_callback: body.success_callback || 'https://your.success.callback.com',
-      failure_callback: body.failure_callback || 'https://your.failure.callback.com',
+      success_redirect: body.success_redirect || 'https://tedtools.com/payment-success',
+      failure_redirect: body.failure_redirect || 'https://tedtools.com/payment-failure',
+      success_callback: body.success_callback || 'https://tedtools.com/paysecure/success-callback',
+      failure_callback: body.failure_callback || 'https://tedtools.com/paysecure/failure-callback',
     };
 
     console.log('Sending purchase payload to PaySecure:', JSON.stringify(payload, null, 2));

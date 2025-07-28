@@ -3,13 +3,18 @@ import { NextRequest, NextResponse } from "next/server";
 export function middleware(request: NextRequest) {
     const url = request.nextUrl.clone();
 
+     const isFailure = url.pathname === '/payment-failure';
+     const isSuccess = url.pathname === '/payment-success';
+     const alreadyRedirected = url.searchParams.has('redirected');
+
     if (
         request.method === 'POST' &&
-        (url.pathname === '/payment-success' || url.pathname === '/payment-failure')
-    ) 
-    {
-        url.searchParams.set('from', 'post');
-        return NextResponse.redirect(url, 308);
+         (isFailure || isSuccess) &&
+         !alreadyRedirected
+    ) {
+        url.searchParams.set('redirected', 'post');
+        url.searchParams.set("from", "true");
+        return NextResponse.redirect(url, 307);
     }
 
     return NextResponse.next();

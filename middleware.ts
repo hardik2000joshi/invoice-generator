@@ -8,7 +8,8 @@ export function middleware(request: NextRequest) {
         (url.pathname === '/payment-success' || url.pathname === '/payment-failure')
     ) 
     {
-        return NextResponse.redirect(url, 307);
+        url.searchParams.set('from', 'post');
+        return NextResponse.redirect(url, 308);
     }
 
     return NextResponse.next();

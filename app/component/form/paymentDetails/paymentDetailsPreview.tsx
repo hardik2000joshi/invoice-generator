@@ -10,7 +10,7 @@ export const PaymentDetailsPreview: React.FC<
   routingCode,
   swiftCode,
   ifscCode,
-  currency = "INR",
+  currency= "AED",
   onClick,
 }) => {
   const currencyDetails = currencyList.find(

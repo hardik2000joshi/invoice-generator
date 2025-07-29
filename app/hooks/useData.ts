@@ -60,7 +60,7 @@ export const useData = () => {
     routingCode: routingCode,
     swiftCode: swiftCode,
     ifscCode: ifscCode,
-    currency
+    currency: "AED"
   };
 
   const yourDetails = {

@@ -11,6 +11,8 @@ function safeURL(input: unknown, fallback: string): string {
       return fallback;
     }
 
+    
+
     try {
       // Debug log to catch problematic values
       console.log('DEBUG: About to call new URL with:', trimmed);
@@ -30,6 +32,12 @@ const corsHeaders = {
   'Access-Control-Allow-Methods': 'GET, POST, OPTIONS',
   'Access-Control-Allow-Headers': 'Content-Type, Authorization',
 };
+
+function safeNumber(input: any, fallback = 0): number {
+  const num = Number(input);
+  return isNaN(num) ? fallback : num;
+}
+
 
 export async function OPTIONS() {
   return new Response(null, {
@@ -68,6 +76,9 @@ export async function POST(request: Request) {
       success_redirect,
       failure_redirect,
       amount,
+      baseAmount,
+      discountAmount,
+      
     } = body;
 
     console.log("Incoming success_redirect:", success_redirect);
@@ -83,7 +94,7 @@ export async function POST(request: Request) {
     console.log('finalFailureRedirect:', finalFailureRedirect);
     console.log('brandID:', brandID);
 
-    const payload = {
+    const paysecurePayload = {
       client: {
         full_name: fullName,
         email: email || 'gouridausa+3101@gmail.com',
@@ -94,6 +105,10 @@ export async function POST(request: Request) {
         zip_code: '400001',
         phone: '9999999999',
         tax_number: 'ABCDEF1234',
+        amount: safeNumber(amount),
+        baseAmount: safeNumber(baseAmount),
+        discountAmount: safeNumber(discountAmount),
+        paymentMethod,
       },
       purchase: {
         currency: 'USD',
@@ -130,7 +145,7 @@ export async function POST(request: Request) {
         'Content-Type': 'application/json',
         Authorization: `Bearer ${token}`,
       },
-      body: JSON.stringify(payload),
+      body: JSON.stringify(paysecurePayload),
     });
 
     if (!paysecureResponse.ok) {
@@ -168,6 +183,8 @@ export async function POST(request: Request) {
       return null;
     }
 
+    
+
     await db.collection ("users").updateOne(
       {email},
       {
@@ -191,13 +208,15 @@ export async function POST(request: Request) {
         $push: {
           payments:{
             date: new Date(),
-        amount,
+        amount: safeNumber(amount),
+        baseAmount: safeNumber(baseAmount),
+        discountAmount: safeNumber(discountAmount),
         method: paymentMethod,
         status: 'initiated',
         paymentId: data.payment_id || extractFromURL(data.checkout_url),
         redirectUrl: data.checkout_url || data.direct_post_url || 'https://tedtools.com/payment-failure',
         paysecureResponse: data,
-        extraParam: payload.extraParam,
+        extraParam: paysecurePayload.extraParam,
           },
         },
       } as any,

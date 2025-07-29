@@ -43,9 +43,10 @@ export async function GET(request:Request) {
             email: user.email,
             payments: (user.payments || []).map ((p: any) => ({
                 date: (p.date)?new Date(p.date).toLocaleString():'N/A',
-                id: p.paysecureResponse?.purchaseId || 'N/A',
-                paymentId: p.paymentId || 'N/A',
+                id: p.paysecureResponse?.purchaseId,
+                paymentId: p.paymentId || 0,
                 amount: p.amount,
+                discountAmount: p.discountAmount || 0,
                 method: p.method,
                 status: p.status,
                 redirectUrl: p.redirectUrl

@@ -20,13 +20,26 @@ const CheckoutPage = () => {
   const [error, setError] = useState<string | null>(null);
   const [success, setSuccess] = useState<string | null>(null);
   const searchParams = useSearchParams();
-  const amountFromQuery = searchParams.get('amount');
-  const [amount, setAmount] = useState(amountFromQuery || '0');
+
+  const amountFromQuery = parseFloat(searchParams.get('amount') || '0');
+  const baseAmountFromQuery = parseFloat(searchParams.get('baseAmount') || '0');
+  const discountAmountFromQuery = parseFloat(searchParams.get('discountAmount') || '0');
+
+  const [amount, setAmount] = useState(amountFromQuery);
+  const [baseAmount, setBaseAmount] = useState(baseAmountFromQuery);
+  const [discountAmount, setDiscountAmount] = useState(discountAmountFromQuery);
 
   useEffect(() => {
-    setAmount(amountFromQuery || '0');
-}, [amountFromQuery]);
+    setAmount(parseFloat(searchParams.get('amount') || '0'));
+}, [searchParams]);
 
+useEffect(() => {
+  setBaseAmount(parseFloat(searchParams.get('baseAmount') || '0'));
+}, [searchParams]);
+
+useEffect(() => {
+  setDiscountAmount(parseFloat(searchParams.get('discountAmount') || '0'));
+}, [searchParams]);
 
   // Toggle discount code visibility
   const handleToggleDiscountCode = () => setShowDiscountCode((show) => !show);
@@ -123,11 +136,13 @@ const CheckoutPage = () => {
       paymentMethod: paymentMethod?.trim() || "",
       success_redirect: success_redirect?.trim() || "",
       failure_redirect: failure_redirect?.trim() || "",
-      amount,
+      amount: isNaN(Number(amount))? 0 : Number(amount),
+      baseAmount: isNaN(Number(baseAmount))? 0 : Number(baseAmount),
+      discountAmount: isNaN(Number(discountAmount))? 0 : Number(discountAmount), 
     };
 
     try {
-      console.log("sending payload to /api/checkout:", )
+      console.log("sending payload to /api/checkout:", payload);
       const response = await fetch("/api/checkout", {
         method: "POST",
         headers: {

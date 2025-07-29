@@ -12,7 +12,7 @@ const SchedulePayment = () => {
     useEffect(() => {
         let cost = 0;
         let discountAmount = 0;
-        let finalAmount = cost - discountAmount;
+        let finalAmount = 0;
         if (requests <= 5000) {
             cost = 50;
             discountAmount = cost * 0.10; // 10%= 10/100 = 0.10 
@@ -64,8 +64,10 @@ const SchedulePayment = () => {
             discountAmount = 50;
         }
 
+        finalAmount = cost - discountAmount;
+        
         setDiscount(discountAmount);
-        setFinalAmount(cost-discountAmount);
+        setFinalAmount(finalAmount);
         setBaseCost(cost);
     }, [requests]);
 
@@ -136,7 +138,7 @@ const SchedulePayment = () => {
                                 </div>
                             </div>
                             <div className='mt-6 flex justify-center'>
-                                <Link href={`/checkout?amount=${finalAmount}`}>
+                                <Link href={`/checkout?amount=${finalAmount}&baseAmount=${baseCost}&discountAmount=${discount}`}>
                                 <button className='px-6 py-3 bg-blue-600 text-white font-medium rounded-lg shadow hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50 transition-all'>
                                     Subscribe Now
                                 </button>

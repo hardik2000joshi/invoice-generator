@@ -151,6 +151,9 @@ export default function MyAccountPage() {
                                         Payment Amount (USD)
                                     </th>
                                     <th className='text-left py-2 px-4 text-gray-600'>
+                                        Discount Amount(USD)
+                                    </th>
+                                    <th className='text-left py-2 px-4 text-gray-600'>
                                         Status
                                     </th>   
                                    </tr>
@@ -159,7 +162,7 @@ export default function MyAccountPage() {
                                 <tbody>
                                     {user.payments.length === 0 && (
                                         <tr>
-                                                <td colSpan={4} className='py-4 px-4 text-center text-gray-500'>
+                                                <td colSpan={5} className='py-4 px-4 text-center text-gray-500'>
                                                     No Payments Found.
                                                 </td>
                                         </tr>
@@ -169,13 +172,19 @@ export default function MyAccountPage() {
                                         user.payments.map((payment:any, index:number) => (
                                             <tr key={index} className='border-b'>
                                                 <td className='py-2 px-4'>
-                                                    {payment.date}
+                                                    {new Date(payment.date).toLocaleString()}
                                                 </td>
                                                 <td className='py-2 px-4'>
-                                                    {payment.redirectUrl?.split("/").pop() || 'N/A'}
+                                                    {payment.paymentId || 'N/A'}
                                                 </td>
                                                 <td className='py-2 px-4'>
-                                                    {parseFloat(payment.amount).toFixed(2)}
+                                                    {Number(payment.amount || 0).toFixed(2)}
+                                                </td>
+                                                <td className='py-2 px-4'>
+                                                    {typeof payment.discountAmount === 'number'
+                                                    ? payment.discountAmount.toFixed(2)
+                                                    : Number(payment.discountAmount || 0).toFixed(2)}
+
                                                 </td>
                                                 <td className={`py-2 px-4 font-semibold ${payment.status === 'initiated' ? 'text-yellow-500' : payment.status === 'failed' ? 'text-red-600' : 'text-green-600'}`}>
                                                     {payment.status === 'initiated' ? 'In Progress' : payment.status === 'failed' ? 'Failed' : 'success'}

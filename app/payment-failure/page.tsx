@@ -24,13 +24,13 @@ export default function PaymentFailure() {
 
       <h1 className="text-3xl font-bold text-red-600 mb-2">Payment Failed!</h1>
       <p className="text-gray-700 mt-4">
-        <strong>Sorry, something went wrong.</strong>Something went wrong.
+        <strong>Sorry, something went wrong.</strong>
         </p>
 
         <p className="text-gray-500 mb-6">
-          Don't worry your money is safe! If money was <br />
+          Don&apos;t worry your money is safe! If money was <br />
           debited from your account, it will be refunded <br />
-          automatically within 5–7 working days.
+          automatically within 5-7 working days.
         </p>
 
         <div className="flex flex-col gap-3">

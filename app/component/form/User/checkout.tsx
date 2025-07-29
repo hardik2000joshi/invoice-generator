@@ -19,6 +19,7 @@ const CheckoutPage = () => {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [success, setSuccess] = useState<string | null>(null);
+  const [currency, setCurrency] = useState("AED");
   const searchParams = useSearchParams();
 
   const amountFromQuery = parseFloat(searchParams.get('amount') || '0');
@@ -139,6 +140,7 @@ useEffect(() => {
       amount: isNaN(Number(amount))? 0 : Number(amount),
       baseAmount: isNaN(Number(baseAmount))? 0 : Number(baseAmount),
       discountAmount: isNaN(Number(discountAmount))? 0 : Number(discountAmount), 
+      currency,
     };
 
     try {
@@ -440,6 +442,35 @@ useEffect(() => {
               Log in here
             </a>
           </p>
+
+          <div className='mb-4'>
+            <label className="block text-sm font-medium mb-2"
+            htmlFor="currency">
+              Currency *
+            </label>
+
+            <select id="currency"
+            value={currency}
+            onChange={(e) => setCurrency(e.target.value)}
+            className='block w-full p-2 border border-gray-300 rounded'
+            required>
+              <option value="AED">
+                AED (UAE Dirham)
+                </option>
+
+                <option value="USD">
+                  USD (US Dollar)
+                </option>
+
+                <option value="EUR">
+                  EUR (EURO)
+                </option>
+
+                <option value="INR">
+                  INR (Indian Rupee)
+                </option>
+            </select>
+          </div>
 
           {/* Payment Method */}
           <div className="max-w-lg mx-auto p-4 shadow-md rounded-md bg-white mt-4">

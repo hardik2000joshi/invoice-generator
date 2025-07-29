@@ -78,6 +78,7 @@ export async function POST(request: Request) {
       amount,
       baseAmount,
       discountAmount,
+      currency,
       
     } = body;
 
@@ -111,7 +112,7 @@ export async function POST(request: Request) {
         paymentMethod,
       },
       purchase: {
-        currency: 'USD',
+        currency: currency || 'AED',
         products: [
           {
             name: 'Power Member Monthly',

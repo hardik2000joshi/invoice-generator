@@ -10,6 +10,7 @@ import { svgToDataUri } from "@/lib/svgToDataUri";
 import { useEffect, useState } from "react";
 import { currencyList } from "@/lib/currency";
 import EmailInvoiceButton from './EmailInvoiceButton';
+import { handleDownload } from "@/lib/handleDownload";
 
 export const DownloadInvoiceButton = () => {
   const [status, setStatus] = useState<
@@ -38,7 +39,18 @@ export const DownloadInvoiceButton = () => {
       const response = await fetch("/api/downloadInvoice", {
         method: "POST",
         credentials: 'include',
+        headers: {
+          "Content-Type" : "application/json",
+        },
+        body: JSON.stringify({
+          companyDetails,
+          invoiceDetails,
+          invoiceTerms,
+          paymentDetails,
+          yourDetails,
+        }),
       });
+
       if (response.ok) {
         const blob = await response.blob();
         const url = window.URL.createObjectURL(blob);
@@ -50,7 +62,9 @@ export const DownloadInvoiceButton = () => {
         setStatus("downloaded");
       }
       else {
-        console.error("Download Failed");
+       const errorText = await response.text();
+       console.error("Download Failed:", response.status, errorText);
+       
         setStatus("not-downloaded");
       }
     }
@@ -96,3 +110,4 @@ export const DownloadInvoiceButton = () => {
     </div>
   );
 };
+export default handleDownload;

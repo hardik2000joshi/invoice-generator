@@ -5,11 +5,11 @@
     return (
         <main className="max-w-4xl mx-auto px-6 py-16">
             <h1 className="text-4xl font-bold text-center text-gray-900 mb-10">
-                PRIVACY POLICY
+                PRIVACY & COOKIE POLICY
             </h1>
             <p className="text-lg text-gray-800 mb-6 leading-relaxed">
                 At <strong className="text-blue-600">TEDTOOLS</strong>, we respect your privacy and are committed to protecting your personal information. <br />
-                This Privacy Policy explains how we collect, use, and safeguard your data <br /> 
+                This Privacy & Cookie Policy explains how we collect, use, and safeguard your data <br /> 
                 when you use our website (
                     <Link href="https://tedtools.com/" target="_blank" className="text-blue-600 underline">
                     https://tedtools.com
@@ -28,9 +28,26 @@
                     </p >
 
                     <ul className='list-disc list-inside space-y1'>
-                        <li>Personal details such as name, email address, and contact information (if provided).</li>
-                        <li>Business information added to invoices, such as company name, address, and payment details.</li>
-                        <li>Technical data like IP address, browser type, and device information for site functionality and security.</li>
+                        <li className='font-bold'>
+                            Personal information:
+                            <p className='font-normal ml-4'>
+                                Name, email address, and contact information (if provided).
+                            </p>
+                        </li>
+
+                        <li className='font-bold'>
+                            Business information:
+                            <p className='font-normal ml-4'>
+                                Company name, address, and payment details added to invoices.
+                            </p>
+                        </li>
+
+                        <li className='font-bold'>
+                            Technical data:
+                            <p className='font-normal ml-4'>
+                                IP address, browser type, device details, and usage data for site functionality, analytics, and security.
+                            </p>
+                        </li>
                     </ul>
                 </section>
 
@@ -51,15 +68,15 @@
                     </li>
 
                 <li>
-                    Generate and manage your invoices.
+                    Generate, store and manage your invoices.
                 </li>
 
                 <li>
-                    Ensure security and prevent unauthorized access.
+                    Ensure website security and prevent unauthorized access.
                     </li>
 
                 <li>
-                    Communicate with you regarding updates, support, or important notices.
+                    Communicate updates, support information, or important notices.
                     </li>
                 </ul>
                 </section>
@@ -71,7 +88,7 @@
                     </h2>
 
                     <p className='mb-2'>
-                        We do not sell, rent, or trade your personal data. We may only share information:
+                        We do not sell, rent, or trade your personal information. Your data may only be shared:
                         </p>
 
                         <ul className='list-disc list-inside space-y1'>
@@ -80,7 +97,7 @@
                             </li>
 
                             <li>
-                                With trusted service providers for hosting, analytics, or support, under strict confidentiality agreements.
+                                With trusted service providers for hosting, analytics, or customer support- under strict confidentiality agreements.
                             </li>
                         </ul>
 
@@ -92,8 +109,8 @@
                         4. Data security
                     </h2>
 
-                    <p>We use industry-standard security measures to protect your personal information. <br />
-                    However, please note that no method of data transmission or storage is 100% secure.</p>
+                    <p>We use industry-standard security measures to protect your data. <br />
+                    However, no method of data transmission or storage is completely secure.</p>
 
                 </section>
 <br />
@@ -108,25 +125,58 @@
                     </p>
 
                     <ul className='list-disc list-inside space-y-1'>
-                        <li>Access, correct, or update your personal information.</li>
                         <li>
-                            Request deletion of your data, where applicable.
+                            Access, correct, or update your personal data.</li>
+                        <li>
+                            Request deletion of your data where applicable.
                         </li>
                         <li>
-                            Opt out of marketing communications at any time.
-                        </li>
+                            Opt out of non-essential marketing communications.
+                            </li>
                     </ul>
                 </section>
 <br />
 
                 <section>
                     <h2 className='font-semibold text-xl mb-2'>
-                        6. Cookies
+                        6. Cookies policy
                     </h2>
-                    <p>
-                        Our website may use cookies to enhance user experience and improve site performance. <br /> 
-                        You can manage your cookie preferences through your browser settings.
+                    <p className='mb-2'>
+                        Our website uses cookies and similar technologies to enhance your browsing experience and improve site performance. <br /> 
                     </p>
+                    <ul className='list-disc list-inside space-y-2 text-gray-800'>
+                        <li className='font-bold'>
+                            What are cookies?
+                            <p className='font-normal ml-4'>
+                                Cookies are small text files stored on your device that help us recognize <br />
+                                you and remember your preferences.
+                            </p>
+                        </li>
+                        <br />
+                        <li className='font-bold'>
+                            Why do we use them?
+                            <ul className='list-[circle] list-inside ml-6 space-y-1 font-normal'>
+                                <li>
+                                    To ensure website functionality and security.
+                                </li>
+                                <li>
+                                    To improve performance and analyze usage.
+                                </li>
+                                <li>
+                                    To personalize user experience.
+                                </li>
+                            </ul>
+                        </li>
+                        <br />
+
+                        <li className='font-bold'>
+                            Managing cookies:
+                            <p className='font-normal ml-4'>
+                                ou can manage or disable cookies through your browser settings. Please note <br /> 
+                                that disabling some cookies may affect website functionality.
+                            </p>
+                        </li>
+                        </ul>
                 </section>
 <br />
 

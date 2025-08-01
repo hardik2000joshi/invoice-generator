@@ -1,4 +1,10 @@
 import { useGetValue, useItemParams } from "@/app/hooks/useGetValue";
+import { currencyList } from "@/lib/currency";
+
+const selectedCurrency = "AED";
+const currencyMeta = currencyList.find(
+  (c) => c.value === selectedCurrency
+);
 
 export const useData = () => {
   const yourEmail = useGetValue("yourEmail");
@@ -60,7 +66,9 @@ export const useData = () => {
     routingCode: routingCode,
     swiftCode: swiftCode,
     ifscCode: ifscCode,
-    currency: "AED"
+    currency: selectedCurrency,
+    paymentSymbol: currencyMeta?.details.currencySymbol || "$",
+    paymentCurrency: currencyMeta?.details.currencyName || selectedCurrency,
   };
 
   const yourDetails = {

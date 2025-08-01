@@ -1,3 +1,4 @@
+"use client";
 import { PreviewDetails } from "@/app/component/form/previewDetails";
 
 const DemoPreview = () => (
@@ -68,4 +69,4 @@ const defaultValue = {
     currency: "AED",
   },
 };
-export default DemoPreview;
+export default DemoPreview;                                         

@@ -181,7 +181,7 @@ export default function RootLayout({
           <Link href="/about" className="hover:text-blue-600 underline">About Us</Link>
         </li>
         <li>
-          <Link href="/privacy-policy" className="hover:text-blue-600 underline">Privacy Policy</Link>
+          <Link href="/privacy-cookie-policy" className="hover:text-blue-600 underline">Privacy & Cookie Policy</Link>
         </li>
         <li>
           <Link href="/contactUs" className="hover:text-blue-600 underline">Contact Us</Link>

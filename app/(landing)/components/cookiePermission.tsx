@@ -78,7 +78,7 @@ return (
                 We use cookies to personalise content and ads, to provide social media features and to analyse our <br />
                 traffic. We also share information about your use of our site with our social media, advertising and <br />
                 analytics partners who may combine it with other information that you've provided to them or that <br />
-                they've collected from your use of their services. <br />
+                they&apos;ve collected from your use of their services. <br />
 
                 <a href="/privacy-cookie-policy" className='text-blue-600 underline'>Cookie Policy</a>
             </p>

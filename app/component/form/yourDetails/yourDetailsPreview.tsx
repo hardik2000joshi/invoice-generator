@@ -16,11 +16,11 @@ export const YourDetailsPreview: React.FC<YourDetails> = ({
     <p className="text-[11px] text-neutral-400 font-semibold uppercase pb-3.5">
       From
     </p>
-    <div className="h-10 mb-3">
+    <div className="h-20 mb-3">
       {yourLogo ? (
-        <img src={yourLogo} alt="Company Logo" className="h-10 rounded-md" />
+        <img src={yourLogo} alt="Company Logo" className="h-20 w-auto rounded-md object-contain" />
       ) : (
-        <div className="rounded-full bg-neutral-100 h-10 w-10 animate-pulse" />
+        <div className="rounded-full bg-neutral-100 h-20 w-20 animate-pulse" />
       )}
     </div>
     {yourName ? (

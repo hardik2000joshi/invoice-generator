@@ -20,7 +20,7 @@ const defaultValue = {
     companyCity: "Mountain View",
     companyState: "CA",
     companyCountry: "USA",
-    /*companyLogo: "/android-chrome-192x192.png",*/
+    companyLogo: "https://1000logos.net/wp-content/uploads/2017/03/Nestle-Logo.png",
     companyTaxId: "",
     companyZip: "94043",
     email: "accounts.payable@nestle-demo.com",
@@ -31,7 +31,7 @@ const defaultValue = {
     yourCity: "Bengaluru",
     yourState: "Karnataka",
     yourCountry: "India",
-    /*yourLogo: "/pranav.png",*/
+    yourLogo: "/deep_logo.png",   
     yourEmail: "hi@deepMarketing123abc",
     yourTaxId: "",
     yourZip: "560038",

@@ -15,12 +15,28 @@ import {
 } from "@/components/ui/popover";
 import { currencyList } from "@/lib/currency";
 import { CheckCircle2 } from "lucide-react";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Controller } from "react-hook-form";
 import { getInitialValue } from "@/lib/getInitialValue";
+import { useCurrencySymbol } from "@/app/context/currencyContext";
 
 const CurrencyInput = () => {
   const [open, setOpen] = useState(false);
+
+  //  New state variable to track if the component has mounted on the client
+  const [isMounted, setIsMounted] = useState(false);
+
+  const {updateSymbol} = useCurrencySymbol();
+
+  // useEffect to set isMounted to true after the initial render
+  useEffect(() => {
+    setIsMounted(true);
+  }, []);
+
+  // Conditional return: if not mounted yet, render nothing
+  if (!isMounted) {
+    return null;
+  }
 
   return (
     <Controller
@@ -64,13 +80,17 @@ const CurrencyInput = () => {
                             currentValue === value ? "INR" : currentValue;
                           localStorage.setItem("currency", updatedValue);
                           onChange(updatedValue);
+                          updateSymbol(updatedValue);
                           setOpen(false);
                         }}
                         className="w-full cursor-pointer my-2"
                       >
                         <div className="flex gap-2 justify-between items-center w-full">
                           <div className="flex gap-2 items-center">
-                            <currency.details.icon className="w-6 h-6 rounded-full border" />
+                             
+                              <currency.details.icon className="w-6 h-6 rounded-full border" />
+  
+                            
                             <p className="font-medium">
                               {currency.details.currencyName}
                             </p>

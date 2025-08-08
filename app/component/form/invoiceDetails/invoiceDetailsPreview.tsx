@@ -2,6 +2,7 @@
 import React from "react";
 import { currencyList } from "@/lib/currency";
 import { ChevronDown } from "lucide-react";
+import { useCurrencySymbol } from "@/app/context/currencyContext";
 
 export const InvoiceDetailsPreview: React.FC<
   InvoiceItemDetails & { onClick?: (step: string) => void }
@@ -10,10 +11,12 @@ export const InvoiceDetailsPreview: React.FC<
   const currencyDetails = currencyList.find(
     (currency) => currency.value.toLowerCase() === currencyType.toLowerCase()
   )?.details;
-  const subtotal = calculateTotalAmount(items);
+  const subtotal = calculateTotalAmount(items || []);
   const discountAmount = subtotal - (discount ? +discount : 0);
   const taxAmount = discountAmount * ((taxRate ? +taxRate : 0) / 100);
   const totalAmount = discountAmount + taxAmount;
+
+  const {symbol} = useCurrencySymbol();
 
   return (
     <div
@@ -52,7 +55,7 @@ export const InvoiceDetailsPreview: React.FC<
           </div>
         </div>
       </div>
-      {items.map(({ itemDescription, amount, qty }, index) => (
+      {(items ?? []).map(({ itemDescription, amount, qty }, index) => (
         <div
           className={`grid grid-cols-2 items-center border-b ${
             index === 0 ? "border-t" : ""
@@ -70,7 +73,7 @@ export const InvoiceDetailsPreview: React.FC<
               {amount ? addCommasToNumber(amount) : ""}
             </p>
             <p className="flex items-end w-full text-xs font-medium text-gray-600 text-right justify-end">
-              {currencyDetails?.currencySymbol}
+              {symbol}
               {amount ? addCommasToNumber((qty ? qty : 1) * amount) : ""}
             </p>
           </div>
@@ -95,7 +98,7 @@ export const InvoiceDetailsPreview: React.FC<
               Subtotal
             </p>
             <p className="flex truncate text-xs font-medium text-gray-600">
-              {currencyDetails?.currencySymbol}
+              {symbol}
               {addCommasToNumber(subtotal)}
             </p>
           </div>
@@ -105,7 +108,7 @@ export const InvoiceDetailsPreview: React.FC<
                 Discount
               </p>
               <p className="flex truncate text-xs font-medium text-gray-600">
-                {currencyDetails?.currencySymbol}
+                {symbol}
                 {discount ? addCommasToNumber(+discount) : ""}
               </p>
             </div>
@@ -116,7 +119,7 @@ export const InvoiceDetailsPreview: React.FC<
                 Tax ({taxRate})%
               </p>
               <p className="flex truncate text-xs font-medium text-gray-600">
-                {currencyDetails?.currencySymbol}
+                {symbol}
                 {addCommasToNumber(+taxAmount.toFixed(2))}
               </p>
             </div>
@@ -128,7 +131,7 @@ export const InvoiceDetailsPreview: React.FC<
               </p>
             </div>
             <p className="flex truncate text-md font-medium">
-              {currencyDetails?.currencySymbol}
+              {symbol}
               {addCommasToNumber(totalAmount)}
             </p>
           </div>
@@ -138,7 +141,7 @@ export const InvoiceDetailsPreview: React.FC<
   );
 };
 
-const calculateTotalAmount = (items: Item[]): number =>
+const calculateTotalAmount = (items: Item[] = []): number =>
   items.reduce((total, item) => {
     const quantity = item.qty ? +item.qty : 1;
     const amount = item.amount ? +item.amount : 0;

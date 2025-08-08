@@ -19,8 +19,8 @@ export const PaymentDetailsPdf: React.FC<PaymentDetailsPdfProps> = ({
   countryImageUrl,
 }) => {
   const currencyDetails = currencyList.find(
-    (currencyDetail) =>
-      currencyDetail.value.toLowerCase() === currency.toLowerCase()
+    (c) =>
+      c.value.toLowerCase() === currency.toLowerCase()
   )?.details;
 
   return (

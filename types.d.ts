@@ -26,7 +26,7 @@ interface InvoiceItemDetails {
   note?: string | null;
   discount?: string | null;
   taxRate?: string | null;
-  items: Item[];
+  items: InvoiceItem[];
   currency?: string;
 }
 

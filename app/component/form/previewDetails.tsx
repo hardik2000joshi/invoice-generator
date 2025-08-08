@@ -4,6 +4,7 @@ import { InvoiceTermsPreview } from "@/app/component/form/invoiceTerms/InvoiceTe
 import { PaymentDetailsPreview } from "@/app/component/form/paymentDetails/paymentDetailsPreview";
 import { YourDetailsPreview } from "@/app/component/form/yourDetails/yourDetailsPreview";
 import { ChevronDown } from "lucide-react";
+import { useData } from "@/app/hooks/useData";
 
 export const PreviewDetails = ({
   yourDetails,
@@ -19,8 +20,10 @@ export const PreviewDetails = ({
   paymentDetails: PaymentDetails;
   invoiceTerms: InvoiceTerms;
   onClick?: (step: string) => void;
-}) => (
-  <div className="overflow-x-auto">
+  currencySymbol: string;
+}) => {
+  return (
+    <div className="overflow-x-auto">
     <div className="w-[595px] h-[842px] bg-white rounded-2xl border border-dashed justify-center items-center">
       <InvoiceTermsPreview {...invoiceTerms} onClick={onClick} />
       <div className="border-b  grid grid-cols-2 justify-between border-dashed">
@@ -63,4 +66,5 @@ export const PreviewDetails = ({
       </div>
     </div>
   </div>
-);
+  );
+};

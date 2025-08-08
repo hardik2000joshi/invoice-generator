@@ -1,28 +1,32 @@
 "use client";
 
 import { Button } from "@/components/ui/button";
-import { CheckCircle2, Download, LoaderIcon, SplineIcon } from "lucide-react";
-import { PdfDetails } from "../pdfDetails";
+import { CheckCircle2, Download, LoaderIcon } from "lucide-react";
 import { useData } from "@/app/hooks/useData";
-import { pdfContainers } from "@/lib/pdfStyles";
-import { saveAs } from "file-saver";
-import { svgToDataUri } from "@/lib/svgToDataUri";
 import { useEffect, useState } from "react";
-import { currencyList } from "@/lib/currency";
 import EmailInvoiceButton from './EmailInvoiceButton';
-import { handleDownload } from "@/lib/handleDownload";
+import handleDownload from "@/lib/handleDownload"; // default import
 
-export const DownloadInvoiceButton = () => {
-  const [status, setStatus] = useState<
-    "downloaded" | "downloading" | "not-downloaded"
-  >("not-downloaded");
-  const {
-    companyDetails,
+interface DownloadInvoiceButtonProps{
+  companyDetails: any;
+  invoiceDetails: any;
+  invoiceTerms: any;
+  paymentDetails: any,
+  yourDetails: any,
+  onGenerateAndDownload?: () => void;
+}
+
+export default function DownloadInvoiceButton ( {
+  companyDetails,
     invoiceDetails,
     invoiceTerms,
     paymentDetails,
     yourDetails,
-  } = useData();
+    onGenerateAndDownload,
+  }: DownloadInvoiceButtonProps) {
+    const [status, setStatus] = useState<
+    "downloaded" | "downloading" | "not-downloaded"
+  >("not-downloaded");
 
   useEffect(() => {
     if (status === "downloaded") {
@@ -32,48 +36,29 @@ export const DownloadInvoiceButton = () => {
     }
   }, [status]);
 
-  const handleDownload = async () => {
+  const onClickDownload = async () => {
     setStatus("downloading");
 
     try {
-      const response = await fetch("/api/downloadInvoice", {
-        method: "POST",
-        credentials: 'include',
-        headers: {
-          "Content-Type" : "application/json",
-        },
-        body: JSON.stringify({
-          companyDetails,
-          invoiceDetails,
-          invoiceTerms,
-          paymentDetails,
-          yourDetails,
-        }),
+      await handleDownload({
+        companyDetails,
+        invoiceDetails,
+        invoiceTerms,
+        paymentDetails,
+        yourDetails,
       });
+      setStatus("downloaded");
 
-      if (response.ok) {
-        const blob = await response.blob();
-        const url = window.URL.createObjectURL(blob);
-        const link = document.createElement("a");
-        link.href = url;
-        link.download = "invoices.pdf";
-        link.click();
-        window.URL.revokeObjectURL(url);
-        setStatus("downloaded");
+      if (onGenerateAndDownload) {
+        onGenerateAndDownload();
       }
-      else {
-       const errorText = await response.text();
-       console.error("Download Failed:", response.status, errorText);
-       
-        setStatus("not-downloaded");
-      }
-    }
-
-    catch(error) {
-      console.error("Download Error:", error);
+  }
+  catch (error) {
+      console.error("Download error:", error);
       setStatus("not-downloaded");
     }
   };
+
 
   return (
     <div className="flex h-[calc(100vh-208px)] justify-center items-center">
@@ -84,7 +69,7 @@ export const DownloadInvoiceButton = () => {
         </p>
         <Button
           disabled={status === "downloading"}
-          onClick= {handleDownload}
+          onClick={onClickDownload}
           type="button"
           className="w-full h-12 rounded-lg text-lg"
         >
@@ -95,7 +80,7 @@ export const DownloadInvoiceButton = () => {
           )}
           {status === "downloading" && (
             <>
-              <LoaderIcon className="mr-2 h-6 w-6 animate-spin" />{" "}
+              <LoaderIcon className="mr-2 h-6 w-6 animate-spin" />
               Downloading...
             </>
           )}
@@ -105,9 +90,8 @@ export const DownloadInvoiceButton = () => {
             </>
           )}
         </Button>
-            <EmailInvoiceButton />
+        <EmailInvoiceButton />
       </div>
     </div>
   );
 };
-export default handleDownload;

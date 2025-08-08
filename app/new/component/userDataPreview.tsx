@@ -2,6 +2,7 @@
 import { PreviewDetails } from "@/app/component/form/previewDetails";
 import { useData } from "@/app/hooks/useData";
 import { useFormContext } from "react-hook-form";
+import { useCurrencySymbol } from "@/app/context/currencyContext";
 
 export const UserDataPreview = () => {
   const {
@@ -17,6 +18,7 @@ export const UserDataPreview = () => {
     setValue("step", step);
     localStorage.setItem("step", step);
   };
+  const {symbol} = useCurrencySymbol();
 
   return (
     <PreviewDetails
@@ -26,6 +28,7 @@ export const UserDataPreview = () => {
       invoiceTerms={invoiceTerms}
       paymentDetails={paymentDetails}
       yourDetails={yourDetails}
+      currencySymbol={symbol}
     />
   );
 };

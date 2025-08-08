@@ -8,6 +8,7 @@ import CustomNumberInput from "@/app/component/ui/customNumberInput";
 import { useGetValue } from "@/app/hooks/useGetValue";
 import { Controller } from "react-hook-form";
 import { getItemValue } from "@/lib/getInitialValue";
+import { useCurrencySymbol } from "@/app/context/currencyContext";
 
 export const InvoiceDetailsForm = () => {
   const value = useGetValue("currency", "INR");
@@ -15,6 +16,7 @@ export const InvoiceDetailsForm = () => {
     (currency) => currency.value.toLowerCase() === value.toLowerCase()
   )?.details;
 
+  const {symbol} = useCurrencySymbol();
   return (
     <Controller
       render={({ field: { onChange, value } }) => (
@@ -36,7 +38,7 @@ export const InvoiceDetailsForm = () => {
                     key={index}
                   >
                     <div
-                      className={`w-9 h-7 ${value.length === 1 && "invisible"}`}
+                      className={`w-9 h-7 ${value.length === 1 ? "invisible": ""}`}
                     >
                       <button
                         onClick={() => {
@@ -160,7 +162,7 @@ export const InvoiceDetailsForm = () => {
               </p>
               <CustomNumberInput
                 label="Discount"
-                placeholder={`${currencyDetails?.currencySymbol}0`}
+                placeholder={`${symbol}0`}
                 variableName="discount"
               />
               <CustomNumberInput

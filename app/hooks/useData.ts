@@ -1,49 +1,58 @@
+"use client";
 import { useGetValue, useItemParams } from "@/app/hooks/useGetValue";
 import { currencyList } from "@/lib/currency";
-
-const selectedCurrency = "AED";
+import { useFormContext } from "react-hook-form";
+import { InvoiceFormValues } from "@/types/invoice";
+import { useCurrencySymbol } from "../context/currencyContext";
+const selectedCurrency = "USD";
 const currencyMeta = currencyList.find(
   (c) => c.value === selectedCurrency
 );
 
 export const useData = () => {
-  const yourEmail = useGetValue("yourEmail");
-  const yourName = useGetValue("yourName");
-  const yourAddress = useGetValue("yourAddress");
-  const yourCity = useGetValue("yourCity");
-  const yourState = useGetValue("yourState");
-  const yourCountry = useGetValue("yourCountry");
-  const yourLogo = useGetValue("yourLogo");
-  const yourTaxId = useGetValue("yourTaxId");
-  const yourZip = useGetValue("yourZip");
+  const { watch } = useFormContext<InvoiceFormValues>();
 
-  const email = useGetValue("email");
-  const companyName = useGetValue("companyName");
-  const companyAddress = useGetValue("companyAddress");
-  const companyCity = useGetValue("companyCity");
-  const companyState = useGetValue("companyState");
-  const companyCountry = useGetValue("companyCountry");
-  const companyLogo = useGetValue("companyLogo");
-  const companyTaxId = useGetValue("companyTaxId");
-  const companyZip = useGetValue("companyZip");
+  const yourEmail = watch("yourDetails.yourEmail");
+  const yourName = watch("yourDetails.yourName");
+  const yourAddress = watch("yourDetails.yourAddress");
+  const yourCity = watch("yourDetails.yourCity");
+  const yourState = watch("yourDetails.yourState");
+  const yourCountry = watch("yourDetails.yourCountry");
+  const yourLogo = watch("yourDetails.yourLogo");
+  const yourTaxId = watch("yourDetails.yourTaxId");
+  const yourZip = watch("yourDetails.yourZip");
 
-  const note = useGetValue("note");
-  const discount = useGetValue("discount");
-  const taxRate = useGetValue("tax");
-  const items = useItemParams();
+  const email = watch("companyDetails.email");
+  const companyName = watch("companyDetails.companyName");
+  const companyAddress = watch("companyDetails.companyAddress");
+  const companyCity = watch("companyDetails.companyCity");
+  const companyState = watch("companyDetails.companyState");
+  const companyCountry = watch("companyDetails.companyCountry");
+  const companyLogo = watch("companyDetails.companyLogo");
+  const companyTaxId = watch("companyDetails.companyTaxID");
+  const companyZip = watch("companyDetails.companyZip");
 
-  const bankName = useGetValue("bankName");
-  const accountNumber = useGetValue("accountNumber");
-  const accountName = useGetValue("accountName");
-  const routingCode = useGetValue("routingCode");
-  const swiftCode = useGetValue("swiftCode");
-  const ifscCode = useGetValue("ifscCode");
+  const note = watch("invoiceDetails.note");
+  const discount = watch("invoiceDetails.discount");
+  const taxRate = watch("invoiceDetails.taxRate");
+  const items = watch("invoiceDetails.items");
 
-  const invoiceNumber = useGetValue("invoiceNo");
-  const issueDate = useGetValue("issueDate");
-  const dueDate = useGetValue("dueDate");
+  const bankName = watch("paymentDetails.bankName");
+  const accountNumber = watch("paymentDetails.accountNumber");
+  const accountName = watch("paymentDetails.accountName");
+  const routingCode = watch("paymentDetails.routingCode");
+  const swiftCode = watch("paymentDetails.swiftCode");
+  const ifscCode = watch("paymentDetails.ifscCode");
 
-  const currency = useGetValue("currency") || "INR";
+  const invoiceNumber = watch("invoiceTerms.invoiceNumber");
+  const issueDate = watch("invoiceTerms.issueDate");
+  const dueDate = watch("invoiceTerms.dueDate");
+
+  const currency = watch("invoiceDetails.currency") || "AED";
+
+  const currencyMeta = currencyList.find(
+    (c) => c.value === currency
+  );
 
   const invoiceTerms = {
     invoiceNumber,
@@ -66,9 +75,13 @@ export const useData = () => {
     routingCode: routingCode,
     swiftCode: swiftCode,
     ifscCode: ifscCode,
-    currency: selectedCurrency,
+    currency: currency,
+
+    // Dynamically set the payment symbol based on selected currency
     paymentSymbol: currencyMeta?.details.currencySymbol || "$",
-    paymentCurrency: currencyMeta?.details.currencyName || selectedCurrency,
+
+    // this is the key change 
+    paymentCurrency: currencyMeta?.details.currencyName || "United States Dollar",
   };
 
   const yourDetails = {
@@ -94,6 +107,8 @@ export const useData = () => {
     companyZip,
     email,
   };
+
+  const {symbol} = useCurrencySymbol();
 
   return {
     companyDetails,

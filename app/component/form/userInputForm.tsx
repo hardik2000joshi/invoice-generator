@@ -1,6 +1,6 @@
 "use client";
 
-import { DownloadInvoiceButton } from "@/app/component/form/downloadInvoice/downloadInvoiceButton";
+import  DownloadInvoiceButton from "@/app/component/form/downloadInvoice/downloadInvoiceButton";
 import { InvoiceDetailsForm } from "@/app/component/form/invoiceDetails/invoiceDetailsForm";
 import { InvoiceTermsForm } from "@/app/component/form/invoiceTerms/invoiceTermsForm";
 import { PaymentDetailsForm } from "@/app/component/form/paymentDetails/paymentDetailsForm";
@@ -8,9 +8,23 @@ import { CompanyDetailsForm } from "@/app/component/form/companyDetails/companyD
 import { YourDetailsForm } from "@/app/component/form/yourDetails/yourDetailsForm";
 import { useGetValue } from "@/app/hooks/useGetValue";
 import { getInitialValue } from "@/lib/getInitialValue";
+import { useData } from "@/app/hooks/useData";
 
 export const UserInputForm = () => {
   const step = useGetValue("step", getInitialValue("step", "1"));
+
+  const {
+    companyDetails,
+    yourDetails,
+    paymentDetails,
+    invoiceTerms,
+    invoiceDetails,
+  } = useData();
+
+  const onGenerateAndDownload = () => {
+  // You can handle post-download logic here
+  console.log("Invoice downloaded!");
+};
 
   return (
     <div>
@@ -29,7 +43,14 @@ export const UserInputForm = () => {
       <div className={step === "5" ? "block" : "hidden"}>
         <InvoiceTermsForm />
       </div>
-      {step === "6" && <DownloadInvoiceButton />}
+      {step === "6" && <DownloadInvoiceButton 
+       companyDetails={companyDetails}
+    invoiceDetails={invoiceDetails}
+    invoiceTerms={invoiceTerms}
+    paymentDetails={paymentDetails}
+    yourDetails={yourDetails}
+    onGenerateAndDownload={onGenerateAndDownload}
+      />}
     </div>
   );
 };

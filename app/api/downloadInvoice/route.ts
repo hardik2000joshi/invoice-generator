@@ -9,6 +9,7 @@ import { parse } from 'cookie';
 export async function POST(request: Request) {
     try {
         const body = await request.json();
+        console.log("Incoming request body:", body);
         const {
             companyDetails,
             invoiceDetails,
@@ -16,6 +17,14 @@ export async function POST(request: Request) {
             paymentDetails,
             yourDetails
         } = body;
+
+        if (!body.companyDetails?.companyName ||
+            !body.yourDetails?.yourName || 
+            !body.invoiceDetails?.items?.length
+        ) {
+            console.error("Received incomplete data:", body);
+            return new Response("Invalid Invoice Data", {status:400});
+        }
 
         const client = await clientPromise;
         const db = client.db('testData');
@@ -182,7 +191,7 @@ export async function POST(request: Request) {
         doc.font("Geist-Bold").text("BANK DETAILS", 50, bankY);
         doc.font("Geist-Regular").text(`Bank Name: ${paymentDetails.bankName}`, 50);
         doc.text(`Account Number: ${paymentDetails.accountNumber}`, 50);
-        doc.text(`Account Name: ${paymentDetails.accountHolderName}`, 50);
+        doc.text(`Account Name: ${paymentDetails.accountName}`, 50);
         doc.text(`Swift Code: ${paymentDetails.swiftCode}`, 50);
         doc.text(`Routing Code: ${paymentDetails.routingCode}`, 50);
         doc.text(`IFSC Code: ${paymentDetails.ifscCode}`, 50);
@@ -195,14 +204,25 @@ export async function POST(request: Request) {
 
         const PDFbuffer = await streamToBuffer(stream);
 
-        console.log("PDF generated and sending response");
-
-        return new Response(PDFbuffer, {
-            headers: {
-                'Content-Type': 'application/pdf',
-                'Content-Disposition': "attachment; filename=invoices.pdf",
-            },
+        const invoiceInsertResult = await db.collection("invoices").insertOne({
+            companyDetails,
+            invoiceDetails,
+            invoiceTerms,
+            paymentDetails,
+            yourDetails,
+            createdAt: new Date(),
+            userEmail,
         });
+
+        console.log("pdf generated and sending responses");
+        return new Response(PDFbuffer, {
+    status: 200,
+    headers: {
+        'Content-Type': 'application/pdf',
+        'Content-Disposition': 'attachment; filename=invoice.pdf',
+        'x-invoice-id': invoiceInsertResult.insertedId.toString(),
+    },
+});
     }
 
     catch (error) {

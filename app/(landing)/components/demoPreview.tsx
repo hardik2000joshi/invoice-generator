@@ -1,17 +1,34 @@
 "use client";
-import { PreviewDetails } from "@/app/component/form/previewDetails";
 
-const DemoPreview = () => (
+import { PreviewDetails } from "@/app/component/form/previewDetails";
+import { useData } from "@/app/hooks/useData"; // get real form data
+import { useCurrencySymbol } from "@/app/context/currencyContext";
+const DemoPreview = () => {
+  const {
+    companyDetails,
+    invoiceDetails,
+    invoiceTerms,
+    paymentDetails,
+    yourDetails, 
+  } = useData();
+
+  const {symbol} = useCurrencySymbol();
+
+
+  return (
+
   <div className="mx-auto w-full flex justify-center items-center">
     <PreviewDetails
-      companyDetails={defaultValue.companyDetails}
-      invoiceDetails={defaultValue.invoiceDetails}
-      invoiceTerms={defaultValue.invoiceTerms}
-      paymentDetails={defaultValue.paymentDetails}
-      yourDetails={defaultValue.yourDetails}
+      companyDetails={companyDetails}
+      invoiceDetails={invoiceDetails}
+      invoiceTerms={invoiceTerms}
+      paymentDetails={paymentDetails}
+      yourDetails={yourDetails}
+      currencySymbol = {symbol}
     />
   </div>
 );
+};
 
 const defaultValue = {
   companyDetails: {
@@ -69,4 +86,6 @@ const defaultValue = {
     currency: "AED",
   },
 };
+
+
 export default DemoPreview;                                         

@@ -23,89 +23,33 @@ import Image from "next/image";
 import Link from "next/link";
 import DemoPreview from "./components/demoPreview";
 import CookiePermission from "./components/cookiePermission";
-import { handleDownload } from "@/lib/handleDownload";
+import handleDownload from "@/lib/handleDownload";
 import { useData } from "../hooks/useData";
-import { FormProvider, useForm } from "react-hook-form";
-import DownloadInvoiceButton from "@/app/component/form/downloadInvoice/downloadInvoiceButton";
+import {useForm} from "react-hook-form";
+import { InvoiceFormProvider } from "../context/InvoiceFormContext";
+import { BrandLogos } from "./components/BrandLogos";
+import { InvoiceDetailsForm } from "../component/form/invoiceDetails/invoiceDetailsForm"; 
+import { defaultValues } from "@/lib/defaultValues";
+import DownloadInvoiceButton from "../component/form/downloadInvoice/downloadInvoiceButton";
+import { CurrencyProvider } from "../context/currencyContext";
 
 
-  
-  const defaultValues = {
-  companyDetails: {
-    companyName: "Nestle",
-    companyAddress: "1600 Amphitheatre Parkway",
-    companyCity: "Mountain View",
-    companyState: "CA",
-    companyCountry: "USA",
-    /*companyLogo: "/android-chrome-192x192.png",*/
-    companyTaxId: "",
-    companyZip: "94043",
-    email: "accounts.payable@nestle-demo.com",
-  },  
-  yourDetails: {
-    yourName: "Deep Marketing Pvt Ltd",
-    yourAddress: "6th Main Rd, Eshwara Layout, Indiranagar,",
-    yourCity: "Bengaluru",
-    yourState: "Karnataka",
-    yourCountry: "India",
-    /*yourLogo: "/pranav.png",*/
-    yourEmail: "hi@deepMarketing123abc",
-    yourTaxId: "",
-    yourZip: "560038",
-  },
-  paymentDetails: {
-    bankName: "Axis Bank",
-    accountNumber: "1234567890",
-    accountName: "Deep Marketing",
-    routingCode: "123456",
-    swiftCode: "AXISINBB1234",
-    ifscCode: "UTIB0000000",
-    currency: "AED",
-  },
-  invoiceTerms: {
-    invoiceNumber: "Invoice #25",
-    issueDate: "Fri Apr 19 2024 00:00:00 GMT+0530 (India Standard Time)",
-    dueDate: "Mon Apr 22 2024 00:00:00 GMT+0530 (India Standard Time)",
-  },
-  invoiceDetails: {
-    note: "Services Period  21/03/2024 to 20/04/2024",
-    discount: "22000",
-    taxRate: "18",
-    items: [
-      {
-        itemDescription: "Software Development Services",
-        amount: 225000,
-        qty: 0,
-      },
-      {
-        itemDescription: "Hosting Charge",
-        amount: 22000,
-        qty: 0,
-      },
-    ],
-    currency: "AED",
-  },
-};
-
-  export default function HomePage() {
-    const methods = useForm({defaultValues });
-  return (
-    <FormProvider {...methods}>
-      <InnerPage />
-    </FormProvider>
-  );
-}
-
-function InnerPage(){
-  const {
-    companyDetails,
+  const HomePageContent = () => {
+     const {
+      companyDetails,
     yourDetails,
     paymentDetails,
     invoiceTerms,
     invoiceDetails,
-  } = useData();
-  return (
+    } = useData();
+
+     const methods = useForm({defaultValues,
+      mode: "onChange",
+     });
+
+      return (
     <>
+
       <CookiePermission />
       <div>
         <div className="border-l border-r max-w-4xl w-full mx-auto border-dashed h-full flex justify-center flex-col border-gray-300">
@@ -218,9 +162,25 @@ function InnerPage(){
               </div>
             </div>
           </div>
+
           <div className="mb-10">
-            <DemoPreview />
+            <BrandLogos/>
           </div>
+
+         <main className="flex flex-col md:flex-row justify-between gap-8 p-6">
+            <section className="w-full md:w-1/2 overflow-auto h-[90vh] border-r pr-4">
+              <InvoiceDetailsForm />
+            </section>
+
+            <section className="w-full md:w-1/2 h-[90vh] overflow-auto">
+              <h2 className="text-2xl font-bold mb-4 text-gray-800">
+                Invoice Preview
+              </h2>
+              <DemoPreview />
+            </section>
+          </main>
+
+
           <p className="font-medium text-xl md:text-3xl border-t border-gray-300 border-b border-dashed md:py-6 py-3 px-7 text-neutral-700 text-center">
             Here&apos;s why you&apos;ll love our Free Invoice Generator
           </p>
@@ -346,13 +306,23 @@ function InnerPage(){
         </div>
 
       </div>
-    </>
+      </>
+      );
+  };
 
-
-
-
-  );
-};
+  export default function HomePage() {
+    return (
+      <CurrencyProvider>
+      <InvoiceFormProvider>
+        <HomePageContent/>
+      </InvoiceFormProvider>
+      </CurrencyProvider>
+    )
+  }
+   
+   
+ 
+      
 
 
 

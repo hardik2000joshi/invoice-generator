@@ -1,5 +1,7 @@
+"use client";
 import { currencyList } from "@/lib/currency";
 import { ChevronDown } from "lucide-react";
+import { useFormContext } from "react-hook-form";
 
 export const PaymentDetailsPreview: React.FC<
   PaymentDetails & { onClick?: (step: string) => void }
@@ -13,9 +15,14 @@ export const PaymentDetailsPreview: React.FC<
   currency= "AED",
   onClick,
 }) => {
+  // Read the live 'currency' value from same react-hook-form
+  const formContext = useFormContext();    // requires this component to be used inside the form provider
+  const watchedCurrency = formContext?.watch?formContext.watch("currency"):undefined;  
+  const currencyCode = (watchedCurrency ?? currency ?? "AED").toString();
+
   const currencyDetails = currencyList.find(
-    (currencyDetails) =>
-      currencyDetails.value.toLowerCase() === currency.toLowerCase()
+    (c) =>
+      c.value.toLowerCase() === currencyCode.toLowerCase()
   )?.details;
 
   return (
@@ -110,22 +117,29 @@ export const PaymentDetailsPreview: React.FC<
         <p className="text-[11px] text-neutral-400 font-medium uppercase mb-3">
           Payable in
         </p>
-        {currencyDetails && (
+        {currencyDetails ? (
           <div className="flex gap-2 justify-between items-center w-full">
             <div className="flex gap-3 items-center">
-              <currencyDetails.icon className="w-8 h-8 rounded-full" />
+              {
+                currencyDetails.icon &&(
+                  <currencyDetails.icon className="w-8 h-8 rounded-full" />
+                )
+              }
+
               <div>
                 <p className="font-medium text-sm">
                   {currencyDetails.currencyName}
                 </p>
                 <p className="text-xxs text-neutral-400">
-                  {currencyDetails.currencySymbol}{" "}
+                  {currencyDetails.currencySymbol}
                   {currencyDetails.currencyShortForm}
                 </p>
               </div>
             </div>
           </div>
-        )}
+        ): (
+          <div className="rounded-[3.5px] bg-neutral-100 h-6 w-32 animate-pulse" />
+        ) }
       </div>
     </div>
   );

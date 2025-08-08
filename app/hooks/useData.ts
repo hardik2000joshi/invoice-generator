@@ -29,7 +29,7 @@ export const useData = () => {
   const companyState = watch("companyDetails.companyState");
   const companyCountry = watch("companyDetails.companyCountry");
   const companyLogo = watch("companyDetails.companyLogo");
-  const companyTaxId = watch("companyDetails.companyTaxID");
+  const companyTaxID = watch("companyDetails.companyTaxID");
   const companyZip = watch("companyDetails.companyZip");
 
   const note = watch("invoiceDetails.note");
@@ -103,7 +103,7 @@ export const useData = () => {
     companyState,
     companyCountry,
     companyLogo,
-    companyTaxId,
+    companyTaxID,
     companyZip,
     email,
   };
@@ -116,5 +116,6 @@ export const useData = () => {
     paymentDetails,
     invoiceTerms,
     invoiceDetails,
+    symbol
   };
 };

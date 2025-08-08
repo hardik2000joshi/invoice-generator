@@ -12,7 +12,7 @@ export const CompanyDetailsPdf: React.FC<CompanyDetails> = ({
   companyState,
   companyCountry,
   companyLogo,
-  companyTaxId,
+  companyTaxID,
   companyZip,
 }) => (
   <View style={pdfContainers.CompanyDetails}>
@@ -42,7 +42,7 @@ export const CompanyDetailsPdf: React.FC<CompanyDetails> = ({
       {companyCountry && (
         <Text style={{ marginBottom: 4 }}>{companyCountry}</Text>
       )}
-      {companyTaxId && <Text>Tax ID: {companyTaxId}</Text>}
+      {companyTaxID && <Text>Tax ID: {companyTaxID}</Text>}
     </View>
   </View>
 );

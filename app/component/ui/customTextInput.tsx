@@ -2,7 +2,7 @@
 
 import { Input } from "@/app/component/ui/input";
 import { getInitialValue } from "@/lib/getInitialValue";
-import { Controller } from "react-hook-form";
+import { Controller, useFormContext } from "react-hook-form";
 
 type CustomInputProps = {
   label?: string;
@@ -14,9 +14,17 @@ const CustomTextInput = ({
   label,
   placeholder,
   variableName,
-}: CustomInputProps) => (
-  <Controller
+}: CustomInputProps) => {
+  const {control} = useFormContext();
+  return (
+
+    <Controller
+    name={variableName}
+      control={control}
+      defaultValue={getInitialValue(variableName)}
     render={({ field: { onChange, value } }) => (
+      <div className="flex flex-col gap-1">
+          {label && <label className="text-sm font-medium">{label}</label>}
       <Input
         label={label}
         placeholder={placeholder}
@@ -28,10 +36,10 @@ const CustomTextInput = ({
           onChange(updatedValue);
         }}
       />
+      </div>
     )}
-    name={variableName}
-    defaultValue={getInitialValue(variableName)}
-  />
-);
+    />
+  );
+};
 
 export default CustomTextInput;

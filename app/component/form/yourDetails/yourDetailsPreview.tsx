@@ -9,7 +9,7 @@ export const YourDetailsPreview: React.FC<YourDetails> = ({
   yourState,
   yourCountry,
   yourLogo,
-  yourTaxId,
+  yourTaxID,
   yourZip,
 }) => (
   <div>
@@ -51,7 +51,7 @@ export const YourDetailsPreview: React.FC<YourDetails> = ({
       ) : (
         <div className="rounded-md bg-neutral-100 h-4 w-3/6 animate-pulse my-2" />
       )}
-      {yourTaxId && <p>Tax ID:{yourTaxId}</p>}
+      {yourTaxID && <p>Tax ID:{yourTaxID}</p>}
     </div>
   </div>
 );

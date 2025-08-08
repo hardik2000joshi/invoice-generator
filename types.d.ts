@@ -6,7 +6,7 @@ interface CompanyDetails {
   companyState?: string | null;
   companyCountry?: string | null;
   companyLogo?: string | null;
-  companyTaxId?: string | null;
+  companyTaxID?: string | null;
   companyZip?: string | null;
 }
 

@@ -1,6 +1,5 @@
 "use client";
-
-import { PreviewDetails } from "@/app/component/form/previewDetails";
+import {PreviewDetails} from "@/app/component/form/previewDetails";
 import { useData } from "@/app/hooks/useData"; // get real form data
 import { useCurrencySymbol } from "@/app/context/currencyContext";
 const DemoPreview = () => {
@@ -18,19 +17,12 @@ const DemoPreview = () => {
   return (
 
   <div className="mx-auto w-full flex justify-center items-center">
-    <PreviewDetails
-      companyDetails={companyDetails}
-      invoiceDetails={invoiceDetails}
-      invoiceTerms={invoiceTerms}
-      paymentDetails={paymentDetails}
-      yourDetails={yourDetails}
-      currencySymbol = {symbol}
-    />
+    <PreviewDetails/>
   </div>
 );
 };
 
-const defaultValue = {
+/*const defaultValue = {
   companyDetails: {
     companyName: "Nestle",
     companyAddress: "1600 Amphitheatre Parkway",
@@ -85,7 +77,7 @@ const defaultValue = {
     ],
     currency: "AED",
   },
-};
+};*/
 
 
 export default DemoPreview;                                         

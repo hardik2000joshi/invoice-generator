@@ -23,12 +23,12 @@ export const UserDataPreview = () => {
   return (
     <PreviewDetails
       onClick={onClick}
-      companyDetails={companyDetails}
-      invoiceDetails={invoiceDetails}
-      invoiceTerms={invoiceTerms}
-      paymentDetails={paymentDetails}
-      yourDetails={yourDetails}
-      currencySymbol={symbol}
+  yourDetails={yourDetails}
+  companyDetails={companyDetails}
+  invoiceDetails={invoiceDetails}
+  paymentDetails={paymentDetails}
+  invoiceTerms={invoiceTerms}
+  currencySymbol={symbol}
     />
   );
 };

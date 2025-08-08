@@ -2,6 +2,7 @@ import type { Metadata, Viewport } from "next";
 import "./globals.css";
 import { GeistSans } from "geist/font/sans";
 import Link from "next/link";
+import { InvoiceFormProvider } from "./context/InvoiceFormContext";
 import Script from "next/script";
 
 function getValidURL(raw: string | undefined, fallback: string) {
@@ -109,6 +110,8 @@ export default function RootLayout({
         <meta name="theme-color" content="#f97316" />
       </head>
       <body className={`${GeistSans.className} flex flex-col min-h-screen`}>
+        <InvoiceFormProvider>
+          
 
         {/* Header */}
         <header className="w-full bg-white shadow-sm px-8 py-6">
@@ -234,7 +237,7 @@ export default function RootLayout({
     &copy; {new Date().getFullYear()} <strong>TEDTOOLS</strong> . All rights reserved.
   </div>
 </footer>
-
+</InvoiceFormProvider>
       </body>
     </html>
     )}

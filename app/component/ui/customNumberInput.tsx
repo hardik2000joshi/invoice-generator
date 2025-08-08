@@ -2,7 +2,7 @@
 
 import { Input } from "@/app/component/ui/input";
 import { getInitialValue } from "@/lib/getInitialValue";
-import { Controller } from "react-hook-form";
+import { Controller, useFormContext } from "react-hook-form";
 
 type CustomNumberProps = {
   label?: string;
@@ -14,25 +14,30 @@ export const CustomNumberInput = ({
   label,
   placeholder,
   variableName,
-}: CustomNumberProps) => (
-  <Controller
-    render={({ field: { onChange, value } }) => (
-      <Input
-        label={label}
-        placeholder={placeholder}
-        value={value}
-        type="text"
-        pattern="[0-9]*"
-        onChange={(e) => {
-          const updatedValue = e.target.value;
-          localStorage.setItem(variableName, updatedValue);
-          onChange(updatedValue);
-        }}
-      />
-    )}
-    defaultValue={getInitialValue(variableName)}
-    name={variableName}
+}: CustomNumberProps) =>{
+  const {control} = useFormContext();
+   return (
+    <Controller
+      control={control}
+      name={variableName}
+      defaultValue={getInitialValue(variableName)}
+      render={({ field: { onChange, value } }) => (
+        <div className="flex flex-col gap-1">
+          {label && <label className="text-sm font-medium">{label}</label>}
+          <Input
+            placeholder={placeholder}
+            value={value || ""}
+            type="number"
+            onChange={(e) => {
+              const updatedValue = e.target.value;
+              localStorage.setItem(variableName, updatedValue);
+              onChange(updatedValue);
+            }}
+          />
+        </div>
+  )}
   />
 );
+};
 
 export default CustomNumberInput;

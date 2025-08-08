@@ -5,24 +5,40 @@ import { PaymentDetailsPreview } from "@/app/component/form/paymentDetails/payme
 import { YourDetailsPreview } from "@/app/component/form/yourDetails/yourDetailsPreview";
 import { ChevronDown } from "lucide-react";
 import { useData } from "@/app/hooks/useData";
+import { useCurrencySymbol } from "@/app/context/currencyContext";
+import {InvoiceFormValues} from "@/types/invoice";
+
+type PreviewDetailsProps = {
+  onClick?: (step:string) => void;
+  yourDetails: InvoiceFormValues["yourDetails"];
+  companyDetails: InvoiceFormValues["companyDetails"];
+  invoiceDetails: InvoiceFormValues["invoiceDetails"];
+  paymentDetails: InvoiceFormValues["paymentDetails"];
+  invoiceTerms: InvoiceFormValues["invoiceTerms"];
+  currencySymbol: string;
+};
+
 
 export const PreviewDetails = ({
-  yourDetails,
-  companyDetails,
-  invoiceDetails,
-  paymentDetails,
-  invoiceTerms,
   onClick,
-}: {
-  yourDetails: YourDetails;
-  companyDetails: CompanyDetails;
-  invoiceDetails: InvoiceItemDetails;
-  paymentDetails: PaymentDetails;
-  invoiceTerms: InvoiceTerms;
-  onClick?: (step: string) => void;
-  currencySymbol: string;
-}) => {
-  return (
+  yourDetails: propYourDetails,
+  companyDetails: propCompanyDetails,
+  invoiceDetails: propInvoiceDetails,
+  paymentDetails: propPaymentDetails,
+  invoiceTerms: propInvoiceTerms,
+  currencySymbol: propCurrencySymbol,
+} : PreviewDetailsProps) => {
+  const data = useData();
+  const {symbol} = useCurrencySymbol();
+
+  const yourDetails = propYourDetails || data.yourDetails;
+  const companyDetails = propCompanyDetails || data.companyDetails;
+  const invoiceDetails = propInvoiceDetails || data.invoiceDetails;
+  const paymentDetails = propPaymentDetails || data.paymentDetails;
+  const invoiceTerms = propInvoiceTerms || data.invoiceTerms;
+  const currencySymbol = propCurrencySymbol || symbol;
+
+   return (
     <div className="overflow-x-auto">
     <div className="w-[595px] h-[842px] bg-white rounded-2xl border border-dashed justify-center items-center">
       <InvoiceTermsPreview {...invoiceTerms} onClick={onClick} />
@@ -68,3 +84,15 @@ export const PreviewDetails = ({
   </div>
   );
 };
+
+const chevronOverlay = () => {
+  <>
+  <ChevronDown className="animate-pulse w-5 h-5 text-orange-500 rotate-[135deg] group-hover:block hidden absolute top-0 left-0" />
+    <ChevronDown className="animate-pulse w-5 h-5 text-orange-500 -rotate-[135deg] group-hover:block hidden absolute top-0 right-0" />
+    <ChevronDown className="animate-pulse w-5 h-5 text-orange-500 rotate-45 group-hover:block hidden absolute bottom-0 left-0" />
+    <ChevronDown className="animate-pulse w-5 h-5 text-orange-500 -rotate-45 group-hover:block hidden absolute bottom-0 right-0" /><ChevronDown className="animate-pulse w-5 h-5 text-orange-500 rotate-[135deg] group-hover:block hidden absolute top-0 left-0" />
+    
+  </>
+};
+
+ 

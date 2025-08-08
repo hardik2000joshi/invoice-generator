@@ -48,7 +48,7 @@
       <CustomTextInput
         label="Tax ID"
         placeholder="GSTIN 1234"
-        variableName="companyTaxId"
+        variableName="companyTaxID"
       />
     </div>
   );

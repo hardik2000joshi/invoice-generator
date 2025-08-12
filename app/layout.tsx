@@ -117,19 +117,19 @@ export default function RootLayout({
         <header className="w-full bg-white shadow-sm px-8 py-6">
     <div className="max-w-6xl mx-auto flex justify-end">
       <div className="flex items-center space-x-6">
-        <Link href="/documentation"
+        {/*<Link href="/documentation"
         className="whitespace-nowrap hover:no-underline font-medium group rounded- [8px] text-sm text-[#333] hover:bg- [#5E5E5E] transition duration-150 ease-in-out flex items-center p-[10px] relative"
         aria-label="Navigate to Documentation"
         >
           Documentation
-        </Link>
+        </Link>*/}
 
-        <Link href="/support"
+        {/*<Link href="/support"
         className="whitespace-nowrap hover:no-underline font-medium group rounded- [8px] text-sm text-[#333] hover:bg- [#5E5E5E] transition duration-150 ease-in-out flex items-center p-[10px] relative"
         aria-label="Navigate to Support"
         >
           Support
-        </Link>
+        </Link>*/}
         
         <Link 
         href="/login" 

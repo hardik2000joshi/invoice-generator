@@ -6,49 +6,74 @@ import { Input } from "@/app/component/ui/input";
 import { Plus, Trash2 } from "lucide-react";
 import CustomNumberInput from "@/app/component/ui/customNumberInput";
 import { useGetValue } from "@/app/hooks/useGetValue";
-import { Controller } from "react-hook-form";
-import { getItemValue } from "@/lib/getInitialValue";
+import { Controller, useFormContext } from "react-hook-form";
 import { useCurrencySymbol } from "@/app/context/currencyContext";
+import { InvoiceFormValues, InvoiceItem } from "@/types/invoice";
 
 export const InvoiceDetailsForm = () => {
+  const {control} = useFormContext<InvoiceFormValues>();
   const value = useGetValue("currency", "INR");
-  const currencyDetails = currencyList.find(
-    (currency) => currency.value.toLowerCase() === value.toLowerCase()
-  )?.details;
 
   const {symbol} = useCurrencySymbol();
+
+  const persistInvoiceItems = (newItems: InvoiceItem[]) => {
+    try {
+      const saved = localStorage.getItem("invoiceData");
+      const data = saved ? JSON.parse(saved) : {};
+      data.invoiceDetails = data.invoiceDetails || {};
+      data.invoiceDetails.items = newItems;
+      localStorage.setItem("invoiceData", JSON.stringify(data));
+    }
+
+    catch {
+
+    }
+  };
+
   return (
     <Controller
-      render={({ field: { onChange, value } }) => (
-        <div className="pt-24">
+    control = {control}
+    name = "invoiceDetails.items"
+      render={({ field: { onChange, value } }) => {
+        const items: InvoiceItem[] =(value ?? []) as InvoiceItem[];
+
+        const updateItems = (newItems: InvoiceItem[]) => {
+          onChange(newItems);
+          persistInvoiceItems(newItems);
+        };
+
+        return (
+           <div className="pt-24">
           <p className="text-2xl font-semibold pb-3">Invoice Details</p>
           <div className="flex flex-col gap-6">
+            {/*currency*/}
             <div>
               <p className="pt-3 font-medium text-neutral-500">
                 Select an invoice currency
               </p>
               <CurrencyInput />
             </div>
+
+            {/*Items*/}
             <div>
               <p className="py-3 font-medium text-sm text-neutral-500">Items</p>
-              {value.map(
-                ({ itemDescription, amount, qty }: Item, index: number) => (
+              {items.map((item, index) => {
+                const {description, qty, price} = item;
+                return (
                   <div
                     className="flex relative items-center group -ml-8"
                     key={index}
                   >
+
+                    {/*Delete button*/}
                     <div
-                      className={`w-9 h-7 ${value.length === 1 ? "invisible": ""}`}
+                      className={`w-9 h-7 ${items.length === 1 ? "invisible": ""}`}
                     >
                       <button
                         onClick={() => {
-                          const newList = [...value];
+                          const newList = [...items];
                           newList.splice(index, 1);
-                          localStorage.setItem(
-                            "items",
-                            JSON.stringify(newList)
-                          );
-                          onChange(newList);
+                          updateItems(newList);
                         }}
                         type="button"
                         className="flex-shrink-0 rounded-md p-1.5 group-hover:bg-gray-50 hidden group-hover:block"
@@ -56,31 +81,30 @@ export const InvoiceDetailsForm = () => {
                         <Trash2 className="w-4 text-gray-500 h-4 group-hover:text-red-400" />
                       </button>
                     </div>
+
+                    {/*Item Name*/}
                     <div className="w-full flex-1">
                       <Input
                         placeholder="Item name"
-                        value={itemDescription}
+                        value={description}
                         type="text"
                         onChange={(e) => {
-                          const updatedArray = [...value];
+                          const updatedArray = [...items];
                           updatedArray[index] = {
-                            itemDescription: e.target.value,
-                            amount,
-                            qty,
+                            ...updatedArray[index], 
+                            description: e.target.value,
                           };
-                          localStorage.setItem(
-                            "items",
-                            JSON.stringify(updatedArray)
-                          );
-                          onChange(updatedArray);
+                          updateItems(updatedArray);
                         }}
                       />
                     </div>
+
+                    {/*Qty*/}
                     <div className="w-14">
                       <Input
-                        placeholder="Qat"
-                        value={`${qty || ""}`}
-                        type="text"
+                        placeholder="Qty"
+                        value={qty ?? ""}
+                        type="number"
                         pattern="[0-9]*"
                         onChange={(e) => {
                           const inputValue = e.target.value;
@@ -88,59 +112,52 @@ export const InvoiceDetailsForm = () => {
                             /^-?\d*\.?\d*$/.test(inputValue) ||
                             inputValue === ""
                           ) {
-                            const updatedArray = [...value];
+                            const updatedArray = [...items];
                             updatedArray[index] = {
-                              itemDescription,
-                              amount,
-                              qty: +inputValue,
+                              ...updatedArray[index],
+                              qty: inputValue === "" ? 0 : Number(inputValue),
                             };
-                            localStorage.setItem(
-                              "items",
-                              JSON.stringify(updatedArray)
-                            );
-                            onChange(updatedArray);
+                            updateItems(updatedArray)
                           }
                         }}
                       />
                     </div>
+
+                    {/*Price*/}
                     <div className="w-14">
                       <Input
                         placeholder="Price"
-                        value={`${amount || ""}`}
-                        type="text"
-                        pattern="[0-9]*"
+                        value={price ?? ""}
+                        type="number"
+                        /*pattern="[0-9]*"*/
+                        step="any"
                         onChange={(e) => {
-                          const inputValue = e.target.value;
+                          const value = e.target.value;
                           if (
-                            /^-?\d*\.?\d*$/.test(inputValue) ||
-                            inputValue === ""
+                            /^-?\d*\.?\d*$/.test(value) ||
+                            value === ""
                           ) {
-                            const updatedArray = [...value];
+                            const updatedArray = [...items];
                             updatedArray[index] = {
-                              itemDescription,
-                              amount: +inputValue,
-                              qty,
+                              ...updatedArray[index],
+                              price: value === "" ? 0 : Number(value),
                             };
-                            localStorage.setItem(
-                              "items",
-                              JSON.stringify(updatedArray)
-                            );
-                            onChange(updatedArray);
+                            updateItems(updatedArray);
                           }
                         }}
                       />
                     </div>
                   </div>
-                )
+                );
+              }
               )}
+
+              {/*Add Item Button*/}
               <div className="py-3 border-dashed border-b border-gray-300">
                 <button
                   onClick={() => {
-                    localStorage.setItem(
-                      "items",
-                      JSON.stringify([...value, { itemDescription: "" }])
-                    );
-                    onChange([...value, { itemDescription: "" }]);
+                    const newList = [...items, {description: "", qty: 1, price: 0}];
+                    updateItems(newList);
                   }}
                   type="button"
                   className="flex justify-center items-center text-orange-500 font-medium text-sm gap-2"
@@ -150,12 +167,17 @@ export const InvoiceDetailsForm = () => {
                 </button>
               </div>
             </div>
+
+            {/*Note*/}
             <div>
               <p className="pt-3 font-medium text-sm text-neutral-500 pb-5">
                 Note
               </p>
-              <CustomTextInput placeholder="Add a note" variableName="note" />
+              {/* note field lives under invoiceDetails.note in your types */}
+              <CustomTextInput placeholder="Add a note" variableName="invoiceDetails.note" />
             </div>
+
+            {/*More Options*/}
             <div>
               <p className="pt-3 font-medium text-sm text-neutral-500 pb-5">
                 More options
@@ -163,19 +185,18 @@ export const InvoiceDetailsForm = () => {
               <CustomNumberInput
                 label="Discount"
                 placeholder={`${symbol}0`}
-                variableName="discount"
+                variableName="invoiceDetails.discount"
               />
               <CustomNumberInput
                 label="Taxes"
                 placeholder="0%"
-                variableName="tax"
+                variableName="invoiceDetails.taxRate"
               />
             </div>
-          </div>
+            </div>
         </div>
-      )}
-      name="items"
-      defaultValue={getItemValue()}
+                );
+              }}
     />
   );
-};
+};    

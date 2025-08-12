@@ -1,3 +1,4 @@
+
 export type InvoiceItem = {
     description: string;
     qty: number;

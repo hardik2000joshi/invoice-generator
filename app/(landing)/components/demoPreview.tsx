@@ -1,23 +1,34 @@
 "use client";
 import {PreviewDetails} from "@/app/component/form/previewDetails";
-import { useData } from "@/app/hooks/useData"; // get real form data
 import { useCurrencySymbol } from "@/app/context/currencyContext";
-const DemoPreview = () => {
-  const {
-    companyDetails,
-    invoiceDetails,
-    invoiceTerms,
-    paymentDetails,
-    yourDetails, 
-  } = useData();
+import { useFormContext } from "react-hook-form";
+import { InvoiceFormValues } from "@/types/invoice";
 
+
+const DemoPreview = () => {
+
+  const {watch} = useFormContext<InvoiceFormValues>();
+  
+  const companyDetails = watch("companyDetails");
+  const yourDetails = watch("yourDetails");
+  const invoiceDetails = watch("invoiceDetails");
+  const paymentDetails = watch ("paymentDetails");
+  const invoiceTerms = watch("invoiceTerms");
+  
   const {symbol} = useCurrencySymbol();
 
 
   return (
 
   <div className="mx-auto w-full flex justify-center items-center">
-    <PreviewDetails/>
+    <PreviewDetails
+    yourDetails={yourDetails}
+    companyDetails={companyDetails}
+    invoiceDetails={invoiceDetails}
+    paymentDetails={paymentDetails}
+    invoiceTerms={invoiceTerms}
+    currencySymbol={symbol}
+    />
   </div>
 );
 };
@@ -30,7 +41,7 @@ const DemoPreview = () => {
     companyState: "CA",
     companyCountry: "USA",
     companyLogo: "https://1000logos.net/wp-content/uploads/2017/03/Nestle-Logo.png",
-    companyTaxId: "",
+    companyTaxID: "",
     companyZip: "94043",
     email: "accounts.payable@nestle-demo.com",
   },  

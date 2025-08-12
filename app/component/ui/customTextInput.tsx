@@ -4,18 +4,22 @@ import { Input } from "@/app/component/ui/input";
 import { getInitialValue } from "@/lib/getInitialValue";
 import { Controller, useFormContext } from "react-hook-form";
 
-type CustomInputProps = {
+interface CustomTextInputProps {
   label?: string;
   placeholder: string;
   variableName: string;
 };
 
-const CustomTextInput = ({
+export default function CustomTextInput ({
   label,
   placeholder,
   variableName,
-}: CustomInputProps) => {
-  const {control} = useFormContext();
+}: CustomTextInputProps) {
+  const {control, watch} = useFormContext();
+
+  const currentValue = watch(variableName);
+  console.log(`[CustomTextInput] ${variableName} value:`, currentValue);
+
   return (
 
     <Controller
@@ -28,7 +32,7 @@ const CustomTextInput = ({
       <Input
         label={label}
         placeholder={placeholder}
-        value={value}
+        value={value || ""}
         type="text"
         onChange={(e) => {
           const updatedValue = e.target.value;
@@ -41,5 +45,3 @@ const CustomTextInput = ({
     />
   );
 };
-
-export default CustomTextInput;

@@ -4,7 +4,6 @@
 "use client";
 
 import {
-  BarChart4,
   CodeXml,
   Download,
   Hourglass,
@@ -19,19 +18,19 @@ import {
   Users,
   Facebook
 } from "lucide-react";
-import Image from "next/image";
 import Link from "next/link";
 import DemoPreview from "./components/demoPreview";
 import CookiePermission from "./components/cookiePermission";
 import handleDownload from "@/lib/handleDownload";
 import { useData } from "../hooks/useData";
-import {useForm} from "react-hook-form";
-import { InvoiceFormProvider } from "../context/InvoiceFormContext";
+import {FormProvider, useForm} from "react-hook-form";
 import { BrandLogos } from "./components/BrandLogos";
 import { InvoiceDetailsForm } from "../component/form/invoiceDetails/invoiceDetailsForm"; 
 import { defaultValues } from "@/lib/defaultValues";
-import DownloadInvoiceButton from "../component/form/downloadInvoice/downloadInvoiceButton";
 import { CurrencyProvider } from "../context/currencyContext";
+import { UserInputForm } from "../component/form/userInputForm";
+import { PreviewDetails } from "../component/form/previewDetails";
+import { NewInvoiceForm } from "../new/component/NewInvoiceForm";
 
 
   const HomePageContent = () => {
@@ -42,10 +41,6 @@ import { CurrencyProvider } from "../context/currencyContext";
     invoiceTerms,
     invoiceDetails,
     } = useData();
-
-     const methods = useForm({defaultValues,
-      mode: "onChange",
-     });
 
       return (
     <>
@@ -166,19 +161,20 @@ import { CurrencyProvider } from "../context/currencyContext";
           <div className="mb-10">
             <BrandLogos/>
           </div>
-
-         <main className="flex flex-col md:flex-row justify-between gap-8 p-6">
-            <section className="w-full md:w-1/2 overflow-auto h-[90vh] border-r pr-4">
-              <InvoiceDetailsForm />
+<main className="flex flex-col md:flex-row min-h-screen w-full max-w-[1200px] mx-auto">
+  <NewInvoiceForm/>    
+         {/*<section className="w-full md:w-1/2 overflow-auto h-[90vh] border-r pr-4">
+              <NewInvoiceForm/>
             </section>
 
-            <section className="w-full md:w-1/2 h-[90vh] overflow-auto">
+           <section className="w-full md:w-1/2 h-[90vh] overflow-auto">
               <h2 className="text-2xl font-bold mb-4 text-gray-800">
                 Invoice Preview
               </h2>
               <DemoPreview />
-            </section>
+            </section>*/}
           </main>
+          
 
 
           <p className="font-medium text-xl md:text-3xl border-t border-gray-300 border-b border-dashed md:py-6 py-3 px-7 text-neutral-700 text-center">
@@ -311,12 +307,17 @@ import { CurrencyProvider } from "../context/currencyContext";
   };
 
   export default function HomePage() {
+    const methods = useForm({
+      defaultValues,
+      mode: "onChange",
+    });
+
     return (
+      <FormProvider {...methods}>
       <CurrencyProvider>
-      <InvoiceFormProvider>
         <HomePageContent/>
-      </InvoiceFormProvider>
       </CurrencyProvider>
+      </FormProvider>
     )
   }
    

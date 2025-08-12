@@ -18,7 +18,7 @@ interface YourDetails {
   yourState?: string | null;
   yourCountry?: string | null;
   yourLogo?: string | null;
-  yourTaxId?: string | null;
+  yourTaxID?: string | null;
   yourZip?: string | null;
 }
 

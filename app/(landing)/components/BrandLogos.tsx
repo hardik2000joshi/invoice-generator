@@ -17,7 +17,7 @@ export function BrandLogos() {
     return (
         <div className="overflow-hidden whitespace-nowrap py-10">
             <p className="text-center text-xl text-neutral-600 mb-6">
-                The world's most popular brands used by TedTools
+                The world&apos;s most popular brands used by TedTools
             </p>
             <motion.div
             className="flex"

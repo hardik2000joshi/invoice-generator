@@ -51,7 +51,7 @@ const DemoPreview = () => {
     yourCity: "Bengaluru",
     yourState: "Karnataka",
     yourCountry: "India",
-    yourLogo: "/deep_logo.png",   
+    yourLogo: "/canvas.png",   
     yourEmail: "hi@deepMarketing123abc",
     yourTaxId: "",
     yourZip: "560038",

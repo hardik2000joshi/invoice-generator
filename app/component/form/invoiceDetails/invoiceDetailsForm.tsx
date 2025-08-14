@@ -126,7 +126,7 @@ export const InvoiceDetailsForm = () => {
                     {/*Price*/}
                     <div className="w-14">
                       <Input
-                        placeholder="Price"
+                        placeholder="price"
                         value={price ?? ""}
                         type="number"
                         /*pattern="[0-9]*"*/

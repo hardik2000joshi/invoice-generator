@@ -8,7 +8,7 @@ export const YourDetailsForm = () => (
     <CustomTextInput
       label="Email"
       placeholder="e.g. pranav@prolab.sh"
-      variableName="yourEmail"
+      variableName="yourDetails.yourEmail"
     />
     <p className="pb-10 pt-3 text-xs font-medium text-neutral-500">
       We&apos;ll fill the billing details automatically if we find the your.
@@ -17,38 +17,39 @@ export const YourDetailsForm = () => (
     <CustomTextInput
       label="Your Name"
       placeholder="Pranav"
-      variableName="yourName"
+      variableName="yourDetails.yourName"
     />
-    <ImageInput label="Logo" variableName="yourLogo" />
+    <ImageInput label="Logo" variableName="yourDetails.yourLogo" />
+
     <CustomTextInput
-      label="Address"
+      label="Your Address"
       placeholder="Whitefield Circle,12"
-      variableName="yourAddress"
+      variableName="yourDetails.yourAddress"
     />
     <CustomTextInput
       label="City"
       placeholder="Bangalore"
-      variableName="yourCity"
+      variableName="yourDetails.yourCity"
     />
     <CustomTextInput
       label="State"
       placeholder="Karnataka"
-      variableName="yourState"
+      variableName="yourDetails.yourState"
     />
     <CustomNumberInput
       label="Zip"
       placeholder="560066"
-      variableName="yourZip"
+      variableName="yourDetails.yourZip"
     />
     <CustomTextInput
       label="Country"
       placeholder="India"
-      variableName="yourCountry"
+      variableName="yourDetails.yourCountry"
     />
     <CustomTextInput
       label="Tax ID"
       placeholder="GSTIN 1234"
-      variableName="yourTaxId"
+      variableName="yourDetails.yourTaxID"
     />
   </div>
 );

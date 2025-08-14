@@ -7,10 +7,10 @@ export const defaultValues: InvoiceFormValues = {
         companyCity: "",
         companyState: "",
         companyCountry: "",
-        companyLogo: "",
+        companyLogo: "/nestle.png",
         companyTaxID: "",
         companyZip: "",
-        email: "",
+        companyEmail: "",
     },
 
     yourDetails: {
@@ -19,9 +19,9 @@ export const defaultValues: InvoiceFormValues = {
         yourCity: "",
         yourState: "",
         yourCountry: "",
-        yourLogo: "",
+        yourLogo: "/deep-logo.png",
         yourEmail: "",
-        yourTaxId: "",
+        yourTaxID: "",
         yourZip: "",
     },
 

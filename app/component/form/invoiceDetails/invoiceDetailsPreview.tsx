@@ -3,6 +3,7 @@ import React from "react";
 import { currencyList } from "@/lib/currency";
 import { ChevronDown } from "lucide-react";
 import { useCurrencySymbol } from "@/app/context/currencyContext";
+import { InvoiceItem } from "@/types/invoice";
 
 export const InvoiceDetailsPreview: React.FC<
   InvoiceItemDetails & { onClick?: (step: string) => void }
@@ -55,7 +56,7 @@ export const InvoiceDetailsPreview: React.FC<
           </div>
         </div>
       </div>
-      {(items ?? []).map(({ itemDescription, amount, qty }, index) => (
+      {(items ?? []).map(({ description, price, qty }, index) => (
         <div
           className={`grid grid-cols-2 items-center border-b ${
             index === 0 ? "border-t" : ""
@@ -63,18 +64,18 @@ export const InvoiceDetailsPreview: React.FC<
           key={index}
         >
           <p className="flex truncate text-xs font-medium text-gray-600">
-            {itemDescription}
+            {description}
           </p>
           <div className="pl-10 grid grid-cols-3 items-center">
             <p className="flex truncate text-xs font-medium text-gray-600">
               {qty || "-"}
             </p>
             <p className="flex truncate text-xs font-medium text-gray-600">
-              {amount ? addCommasToNumber(amount) : ""}
+              {price ? addCommasToNumber(price) : ""}
             </p>
             <p className="flex items-end w-full text-xs font-medium text-gray-600 text-right justify-end">
               {symbol}
-              {amount ? addCommasToNumber((qty ? qty : 1) * amount) : ""}
+              {price ? addCommasToNumber((qty ? qty : 1) * price) : ""}
             </p>
           </div>
         </div>
@@ -141,11 +142,11 @@ export const InvoiceDetailsPreview: React.FC<
   );
 };
 
-const calculateTotalAmount = (items: Item[] = []): number =>
+const calculateTotalAmount = (items: InvoiceItem[] = []): number =>
   items.reduce((total, item) => {
     const quantity = item.qty ? +item.qty : 1;
-    const amount = item.amount ? +item.amount : 0;
-    return total + quantity * amount;
+    const price = item.price ? +item.price : 0;
+    return total + quantity * price;
   }, 0);
 
 const addCommasToNumber = (number: number): string => {

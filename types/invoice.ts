@@ -1,8 +1,8 @@
 
 export type InvoiceItem = {
     description: string;
-    qty: number;
-    price: number;
+    qty?: number;
+    price?: number;
 };
 
 export type InvoiceFormValues = {
@@ -12,10 +12,10 @@ export type InvoiceFormValues = {
         companyCity: string;
         companyState: string;
         companyCountry: string;
-        companyLogo: string;
+        companyLogo?: string;
         companyTaxID: string;
         companyZip: string;
-        email: string;
+        companyEmail: string; 
     };
 
     yourDetails: {
@@ -24,9 +24,9 @@ export type InvoiceFormValues = {
         yourCity: string;
         yourState: string;
         yourCountry: string;
-        yourLogo: string;
+        yourLogo?: string;
         yourEmail: string;
-        yourTaxId: string;
+        yourTaxID: string;
         yourZip: string;
     };
     invoiceDetails: {

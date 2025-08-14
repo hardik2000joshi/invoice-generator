@@ -8,9 +8,9 @@ export const InvoiceTermsForm = () => (
     <CustomTextInput
       label="Invoice number"
       placeholder="INVOICE-01"
-      variableName="invoiceNo"
+      variableName="invoiceTerms.invoiceNumber"
     />
-    <DateInput label="Issue date" variableName="issueDate" />
-    <DateInput label="Due date" variableName="dueDate" />
+    <DateInput label="Issue date" variableName="invoiceTerms.issueDate" />
+    <DateInput label="Due date" variableName="invoiceTerms.dueDate" />
   </div>
 );

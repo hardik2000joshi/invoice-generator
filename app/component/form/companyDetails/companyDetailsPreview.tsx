@@ -2,9 +2,9 @@
 "use client";
 
 import React from "react";
-
-export const CompanyDetailsPreview: React.FC<CompanyDetails> = ({
-  email,
+import { InvoiceFormValues } from "@/types/invoice";
+export const CompanyDetailsPreview: React.FC<InvoiceFormValues["companyDetails"]> = ({
+  companyEmail,
   companyName,
   companyAddress,
   companyCity,
@@ -30,8 +30,8 @@ export const CompanyDetailsPreview: React.FC<CompanyDetails> = ({
     ) : (
       <div className="rounded-md bg-neutral-100 h-5 w-5/6  animate-pulse mb-4" />
     )}
-    {email ? (
-      <p className="text-neutral-500/90 text-sm mb-3">{email}</p>
+    {companyEmail ? (
+      <p className="text-neutral-500/90 text-sm mb-3">{companyEmail}</p>
     ) : (
       <div className="rounded-md bg-neutral-100 h-4 w-4/6 animate-pulse my-2" />
     )}

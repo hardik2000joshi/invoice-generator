@@ -19,10 +19,10 @@ export const useData = () => {
   const yourState = watch("yourDetails.yourState");
   const yourCountry = watch("yourDetails.yourCountry");
   const yourLogo = watch("yourDetails.yourLogo");
-  const yourTaxId = watch("yourDetails.yourTaxId");
+  const yourTaxId = watch("yourDetails.yourTaxID");
   const yourZip = watch("yourDetails.yourZip");
 
-  const email = watch("companyDetails.email");
+  const email = watch("companyDetails.companyEmail");
   const companyName = watch("companyDetails.companyName");
   const companyAddress = watch("companyDetails.companyAddress");
   const companyCity = watch("companyDetails.companyCity");

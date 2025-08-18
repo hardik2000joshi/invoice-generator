@@ -1,6 +1,7 @@
 'use client';
 
-import React, { useEffect } from 'react';
+import React, {useState, useEffect } from 'react';
+import { useData } from '../hooks/useData';
 
 export default function ContactUsPage() {
     useEffect(() => {
@@ -14,23 +15,90 @@ export default function ContactUsPage() {
          }
     }, []);
 
+    const [formData, setFormData] = useState({
+        fullName: "",
+        email: "",
+        subject: "",
+        message: "",
+    }); 
+
+    const [status, setStatus] = useState("");
+
+    const handleChange = (
+        e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+    ) => {
+        setFormData({...formData, [e.target.name]: e.target.value });
+    };
+
+    const handleSubmit = async (e:React.FormEvent) => {
+        e.preventDefault();
+        setStatus("Sending...");
+
+        try {
+            const response = await fetch("/api/contactUs", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                    body: JSON.stringify(formData),
+        });
+        const data = await response.json();
+
+        if (response.ok) {
+            setStatus("Message sent successfully");
+            setFormData({fullName: "", email: "", subject: "", message: ""})
+        }
+        else {
+            setStatus("Error:" +data.error);
+        }
+        }
+
+        catch (error) {
+            setStatus("Failed to sent message");
+        }
+    };
+
     return (
         <main className='max-w-3xl mx-auto px-4 py-8'>
             <h1 className='text-4xl font-bold mb-8 text-center text-gray-800'>Contact Us</h1>
 
-            <form className='space-y-6'>
+            <form className='space-y-6' onSubmit = {handleSubmit}>
                 <div className='flex flex-col md:flex-row md:space-x-4 space-y-4 md:space-y-0'>
-                    <input type="text" placeholder='Full Name' className='flex-1 p-4 rounded-md border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-400'
+                    <input 
+                    type="text" 
+                    name="fullName" 
+                    placeholder='Full Name' 
+                    value={formData.fullName}
+                    onChange={handleChange}
+                    className='flex-1 p-4 rounded-md border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-400'
                     />
-                    <input type="email" placeholder='Email' className='flex-1 p-4 rounded-md border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-400'
+
+                    <input 
+                    type="email" 
+                    name='email' 
+                    placeholder='Email'
+                    value={formData.email}
+                    onChange={handleChange} 
+                    className='flex-1 p-4 rounded-md border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-400'
                     />
                 </div>
                 <div>
-                    <input type="text" placeholder='subject' className='w-full p-4 rounded-md border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-400'
+                    <input 
+                    type="text" 
+                    name='subject' 
+                    placeholder='subject'
+                    value={formData.subject}
+                    onChange={handleChange} 
+                    className='w-full p-4 rounded-md border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-400'
                     />
                 </div>
                 <div>
-                    <textarea placeholder='Your Message' className='w-full p-4 rounded-md border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-400' rows={7}>
+                    <textarea 
+                    name='message' 
+                    placeholder='Your Message'
+                    value={formData.message}
+                    onChange={handleChange} 
+                    className='w-full p-4 rounded-md border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-400' rows={7}>
                         </textarea>
                 </div>
 
@@ -42,6 +110,8 @@ export default function ContactUsPage() {
                     </button>
                 </div>
             </form>
+
+            {status && <p className='text-center mt-4'>{status}</p>}
         </main>
     );
 }

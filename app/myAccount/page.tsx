@@ -91,6 +91,12 @@ export default function MyAccountPage() {
                     </li>
 
                     <li>
+                        <button onClick={() => setActiveTab('contactMessages')} className={`block w-full text-left px-4 py-2 rounded-lg font-medium ${activeTab === 'contactMessages' ? 'bg-gray-200' : 'hover:bg-gray-100'}`}>
+                            contactMessages
+                        </button>
+                    </li>
+
+                    <li>
                         <button onClick={handleLogout} className="block w-full text-left px-4 py-2 rounded-lg font-medium text-red-500 hover:bg-red-100">
                             Logout
                         </button>
@@ -228,6 +234,44 @@ export default function MyAccountPage() {
                             </div>
                         </section>
                     )}
+
+                    {activeTab === 'contactMessages' && (
+                       <section className='bg-white p-6 rounded-lg shadow space-y-4'>
+                        <h2 className='text-2xl font-bold text-gray-800'>
+                            Contact Messages
+                        </h2>
+                        {user?.contactMessages?.length>0?(
+                            <ul className='space-y-3'>
+                                {user.contactMessages.map((msg: any, i: number) => (
+                                    <li key={i} className='p-3 bg-gray-100 rounded'>
+                                        <p>
+                                            <strong>
+                                                Subject:
+                                            </strong>
+                                            {msg.subject}
+                                        </p>
+
+                                        <p>
+                                            <strong>
+                                                Message:
+                                            </strong>
+                                            {msg.message}
+                                        </p>
+
+                                        <p className='text-sm text-gray-500'>
+                                            {new Date(msg.createdAt).toLocaleString()}
+                                        </p>
+                                    </li>
+                                ))}
+                            </ul>
+                        ): (
+                            <p className='text-gray-500'>
+                                No messages found.
+                            </p>
+                        )}
+
+                       </section>     
+                        )}
             </main>
 
         </div>

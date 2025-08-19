@@ -145,7 +145,7 @@ import { NewInvoiceForm } from "../new/component/NewInvoiceForm";
                   className="flex flex-col cursor-pointer"
                 >
                   <div className="flex justify-center items-center gap-2">
-                    <Download className="w-4 h-4" />
+                    <Download className="w-4 h-4 pointer-events-none" />
 
                     <span className="text-xs">Download</span>
                   </div>

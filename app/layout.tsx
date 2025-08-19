@@ -115,7 +115,16 @@ export default function RootLayout({
 
         {/* Header */}
         <header className="w-full bg-white shadow-sm px-8 py-6">
-    <div className="max-w-6xl mx-auto flex justify-end">
+          <div className="max-w-6xl mx-auto flex justify-between items-center">
+
+            {/*Logo*/}
+            <img src="/Tedtools logo.svg" 
+            alt="Tedtools Logo" 
+            width={150}
+            height={200}
+            className="flex items-center"
+            />
+
       <div className="flex items-center space-x-6">
         {/*<Link href="/documentation"
         className="whitespace-nowrap hover:no-underline font-medium group rounded- [8px] text-sm text-[#333] hover:bg- [#5E5E5E] transition duration-150 ease-in-out flex items-center p-[10px] relative"

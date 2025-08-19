@@ -50,11 +50,11 @@ export default function InnerPage({onGenerateAndDownload} : InnerPageProps) {
             </p>
 
             <DownloadInvoiceButton
-                companyDetails={companyDetails}
-                invoiceDetails={invoiceDetails}
-                invoiceTerms={invoiceTerms}
-                paymentDetails={paymentDetails}
-                yourDetails={yourDetails}
+            companyDetails={companyDetails}
+            invoiceDetails={invoiceDetails}
+            invoiceTerms={invoiceTerms}
+            paymentDetails={paymentDetails}
+            yourDetails={yourDetails}
                 onGenerateAndDownload={onGenerateAndDownload}
             />
         </div>

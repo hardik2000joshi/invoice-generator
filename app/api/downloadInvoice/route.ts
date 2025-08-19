@@ -12,7 +12,7 @@ export async function POST(request: Request) {
         console.log("Incoming request body:", body);
         const {
             companyDetails,
-            invoiceDetails,
+            invoiceDetails, 
             invoiceTerms,
             paymentDetails,
             yourDetails
@@ -133,7 +133,7 @@ export async function POST(request: Request) {
                 doc.text(`${companyDetails.companyAddress}`, toX);
                 doc.text(`${companyDetails.companyCity}, ${companyDetails.companyState}, ${companyDetails.companyZip}`, toX);
                 doc.text(`${companyDetails.companyCountry}`, toX);
-                doc.text(`Tax ID: ${companyDetails.companyTaxId || '-'}`, toX);
+                doc.text(`Tax ID: ${companyDetails.companyTaxID || '-'}`, toX);
                 doc.moveDown();
 
         // Line Break
@@ -154,10 +154,11 @@ export async function POST(request: Request) {
 
         invoiceDetails.items.forEach((item: any) => {
             const y = doc.y;
-            doc.text(item.itemDescription, 50, y);
-            doc.text(item.quantity || "1", 300, y);
+            doc.text(item.description, 50, y);
+            doc.text(item.qty?.toString() || "1", 300, y);
             doc.text(item.price?.toLocaleString() || "0", 360, y);
-            doc.text(item.amount?.toLocaleString() || "0", 440, y);
+            const amount = (item.qty || 0) * (item.pice || 0)
+            doc.text(amount.toLocaleString(), 440, y);
         });
 
         doc.moveDown();
@@ -171,7 +172,9 @@ export async function POST(request: Request) {
 
 
         // TOTALS
-        const subtotal = invoiceDetails.items.reduce((acc: any, item: any) => acc + (item.amount || 0), 0);
+        const subtotal = invoiceDetails.items.reduce((acc: any, item: any) => {
+            return acc + ((item.qty || 0) * (item.price || 0));
+        }, 0);
         const discount = parseFloat(invoiceDetails.discount || "0");
         const taxRate = parseFloat(invoiceDetails.taxRate || "0");
         const taxedAmount = ((subtotal - discount) * taxRate) / 100;

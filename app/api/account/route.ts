@@ -5,7 +5,9 @@ export async function GET(request:Request) {
     const client = await clientPromise;
     const db = client.db('testData');
     const usersCollection = db.collection("users");
+    const contactsCollection = db.collection("contacts");
 
+    // parse cookies
     const cookieHeader = request.headers.get("cookie");
     if (!cookieHeader) {
         return NextResponse.json({message: "unauthorized, no cookies found"}, {status: 404});
@@ -35,6 +37,12 @@ export async function GET(request:Request) {
     (keyObj: any) => keyObj.isActive
   );
 
+  // fetch contact messages for this user
+  const contactMessages = await contactsCollection
+  .find({email: userEmail})
+  .sort({createdAt: -1})
+  .toArray();
+
     // fetch and return user data to frontend
     // frontend should receive only active keys
     return NextResponse.json(
@@ -52,5 +60,6 @@ export async function GET(request:Request) {
                 redirectUrl: p.redirectUrl
             })),
             apiKeys: activeAPIKeys,
+            contactMessages,
         });
 }

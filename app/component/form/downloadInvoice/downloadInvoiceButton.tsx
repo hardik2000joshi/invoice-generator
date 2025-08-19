@@ -2,7 +2,6 @@
 
 import { Button } from "@/components/ui/button";
 import { CheckCircle2, Download, LoaderIcon } from "lucide-react";
-import { useData } from "@/app/hooks/useData";
 import { useEffect, useState } from "react";
 import EmailInvoiceButton from './EmailInvoiceButton';
 import handleDownload from "@/lib/handleDownload"; // default import

@@ -15,12 +15,13 @@ export async function POST(request: Request) {
             invoiceDetails, 
             invoiceTerms,
             paymentDetails,
-            yourDetails
+            yourDetails,
+            userEmail: bodyEmail,
         } = body;
 
-        if (!body.companyDetails?.companyName ||
-            !body.yourDetails?.yourName || 
-            !body.invoiceDetails?.items?.length
+        if (!companyDetails?.companyName ||
+            !yourDetails?.yourName || 
+            !invoiceDetails?.items?.length
         ) {
             console.error("Received incomplete data:", body);
             return new Response("Invalid Invoice Data", {status:400});
@@ -31,19 +32,30 @@ export async function POST(request: Request) {
 
         const cookieHeader = request.headers.get('cookie');
         const cookiesobj = cookieHeader ? parse(cookieHeader) : {};
-        const userEmail = cookiesobj['userEmail'];
+        let userEmail = cookiesobj['userEmail'];
+
+        if (!userEmail) {
+            userEmail = bodyEmail || yourDetails?.yourEmail;
+            
+        }
 
         if (!userEmail) {
             return new Response("unauthorized: No user Email found in cookies", { status: 401 });
         }
 
-        console.log("User email from cookie:", userEmail);
+        console.log("User email (cookie/body):", userEmail);
 
-        const user = await db.collection('users').findOne({ email: userEmail });
+        let user = await db.collection('users').findOne({ email: userEmail });
 
-        if (!user || !Array.isArray(user.payments) || user.payments.length === 0) {
-            return new Response('No invoices found', { status: 404 });
-        }
+        if (!user) {
+  await db.collection("users").insertOne({
+    email: userEmail,
+    payments: [],
+    createdAt: new Date(),
+  });
+
+  user = await db.collection("users").findOne({ email: userEmail });
+}
 
         // save invoice to MONgoDB
         const paymentData = {
@@ -232,4 +244,4 @@ export async function POST(request: Request) {
         console.error('Download Invoice PDF Error:', error);
         return new Response('Internal Server Error', { status: 500 });
     }
-}
+}   

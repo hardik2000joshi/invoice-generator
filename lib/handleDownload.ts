@@ -5,12 +5,14 @@ const handleDownload = async ({
     invoiceTerms,
     paymentDetails,
     yourDetails,
+    userEmail,
 }: {
     companyDetails: any;
     invoiceDetails: any;
     invoiceTerms: any;
     paymentDetails: any;
     yourDetails: any;
+    userEmail?: string;
 }) : Promise<string | null>  => {
     console.log("Sending to backend:", {
             companyDetails,
@@ -18,6 +20,7 @@ const handleDownload = async ({
             invoiceTerms,
             paymentDetails,
             yourDetails,
+            userEmail,
         });
 
         console.log("Debug Company Details:", companyDetails);
@@ -42,7 +45,8 @@ const handleDownload = async ({
                 invoiceTerms,
                 paymentDetails,
                 yourDetails,
-            }),
+                userEmail: yourDetails?.yourEmail || userEmail,
+            })
         });
 
         if (response.ok) {

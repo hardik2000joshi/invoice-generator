@@ -12,6 +12,7 @@ interface DownloadInvoiceButtonProps{
   invoiceTerms: any;
   paymentDetails: any,
   yourDetails: any,
+  userEmail?: string;   // add optional userEmail
   onGenerateAndDownload?: () => void;
 }
 
@@ -21,6 +22,7 @@ export default function DownloadInvoiceButton ( {
     invoiceTerms,
     paymentDetails,
     yourDetails,
+    userEmail,
     onGenerateAndDownload,
   }: DownloadInvoiceButtonProps) {
     const [status, setStatus] = useState<
@@ -45,6 +47,7 @@ export default function DownloadInvoiceButton ( {
         invoiceTerms,
         paymentDetails,
         yourDetails,
+        userEmail: userEmail || yourDetails.yourEmail,
       });
       setStatus("downloaded");
 

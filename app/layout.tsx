@@ -118,7 +118,7 @@ export default function RootLayout({
           <div className="max-w-6xl mx-auto flex justify-between items-center">
 
             {/*Logo*/}
-            <img src="/Tedtools logo.svg" 
+            <img src="/apple-touch-icon.png" 
             alt="Tedtools Logo" 
             width={150}
             height={200}

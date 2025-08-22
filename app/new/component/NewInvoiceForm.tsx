@@ -31,7 +31,7 @@ export const NewInvoiceForm = () => {
             <div>
               <div className="flex gap-2 items-center">
                 <Image
-                  src="/android-chrome-512x512.png"
+                  src="/apple-touch-icon.png"
                   width={40}
                   height={40}
                   className="rounded-lg"

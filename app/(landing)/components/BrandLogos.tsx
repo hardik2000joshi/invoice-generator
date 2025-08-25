@@ -4,13 +4,12 @@ import {motion} from "framer-motion";
 import Image from "next/image";
 
 const brands = [
-    {src: "/mercari_sub.jpg", alt: "Mercari Logo"},
-    {src: "/doordash.png", alt: "doordash logo"},
-    {src: "/naver.png", alt: "naver logo"},
-    {src: "/Smartly_logo.png", alt: "smartly logo"},
-    {src: "/depop.png", alt: "Depop logo"},
-    {src: "/amazon.png", alt: "Amazon logo"},
-    {src: "/Klarna.png", alt: "KLARNA Logo"},
+    {src: "/zoho-invoice-review.png", alt: "Zoho invoice"},
+    {src: "/Quickbooks.jpeg", alt: "Quickbooks logo"},
+    {src: "/FreshBooks.jpeg", alt: "FreshBooks logo"},
+    {src: "/Square Invoices.png", alt: "SquareInvoice logo"},
+    {src: "/invoice2go-logo.jpg", alt: "invoice2go logo"},
+    {src: "/pandadoc.png", alt: "pandadoc logo"},
 ];
 
 export function BrandLogos() {

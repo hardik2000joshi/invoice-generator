@@ -63,8 +63,8 @@ export const metadata: Metadata = {
   robots: "index, follow",
 
   icons: {
-    icon: "/favicon.ico",
-    shortcut: "/favicon.ico",
+    icon: "/Tedtools logo 1.svg",
+    shortcut: "/Tedtools logo 1.svg",
     apple: "/apple-touch-icon.png",
   },
 

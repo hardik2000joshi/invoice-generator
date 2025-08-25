@@ -125,12 +125,16 @@ export default function RootLayout({
           <div className="max-w-6xl mx-auto flex justify-between items-center">
 
             {/*Logo*/}
-            <img src="/apple-touch-icon.png" 
-            alt="Tedtools Logo" 
-            width={150}
-            height={200}
-            className="flex items-center"
+            <Link href="/" className="flex items-center">
+            <img 
+            src="/Tedtools logo 1.svg" 
+            alt="Tedtools" 
+            className="h-10 w-auto mr-1"
             />
+            <span className="font-bold text-gray-900 text-xl">
+              TedTools  
+            </span>
+            </Link>
 
       <div className="flex items-center space-x-6">
         {/*<Link href="/documentation"

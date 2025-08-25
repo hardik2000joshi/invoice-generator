@@ -50,7 +50,7 @@ export const metadata: Metadata = {
     },
   },
   title:
-    "Free Invoice Generator: Create & Send Professional Invoices in Minutes",
+    "TedTools: Create & Send Professional Invoices in Minutes",
   description:
     "Get paid on time with our free invoice maker. Create professional invoices & get them to clients instantly.",
   keywords: [
@@ -61,14 +61,21 @@ export const metadata: Metadata = {
     "create invoice",
   ],
   robots: "index, follow",
-  openGraph: {
+
+  icons: {
+    icon: "/favicon.ico",
+    shortcut: "/favicon.ico",
+    apple: "/apple-touch-icon.png",
+  },
+
+  openGraph: {  
     title:
-      "Free Invoice Generator: Create & Send Professional Invoices in Minutes",
+      "TedTools: Create & Send Professional Invoices in Minutes",
     description:
       "Get paid on time with our free invoice maker. Create professional invoices & get them to clients instantly.",
     url: baseUrl,
     type: "website",
-    images: "/og-image.jpeg",
+    images: "/apple-touch-icon.png",
     siteName: "Invoice Generator",
   },
   twitter: {

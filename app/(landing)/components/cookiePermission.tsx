@@ -93,7 +93,7 @@ return (
             <div className="flex justify-end gap-1">
           <button onClick={handleDeny} className="bg-gray-200 text-white font-semibold px-3 py-1 rounded">Deny</button>
           <button onClick={handleAllowSelection} className="border font-semibold px-3 py-1 rounded">Allow selection</button>
-          <button onClick={handleAllowAll} className="bg-purple-300 text-white font-semibold px-3 py-1 rounded">Allow all</button>
+          <button onClick={handleAllowAll} className="text-white px-4 py-2 rounded-lg bg-gradient-to-r from-[#2F85FE] to-[#6D48F9] hover:opacity-90 transition">Allow all</button>
         </div>
         </div>
 );
